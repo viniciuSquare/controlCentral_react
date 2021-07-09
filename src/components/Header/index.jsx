@@ -1,12 +1,22 @@
 import { HeaderStyled } from "./styled";
 
+import logoImg from '../../assets/tayaya.png'
+
 export function Header() {
   return (
     <HeaderStyled>
+      <div id="brand">
+        <img 
+          src={logoImg} 
+          alt="Tayaya Logo" 
+          className="logo" 
+        />
+        <h1 className="brand-title">Tayaya</h1>
+      </div>
       <h1 className="page-title">Home</h1>
       {/* // TODO */}
       <div className="header-body" >
-        <input type="text" />
+        {/* <input type="text" /> */}
 
         <span id="notification-icon">
           <svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
