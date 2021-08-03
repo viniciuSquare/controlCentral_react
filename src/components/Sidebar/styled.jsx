@@ -1,36 +1,71 @@
 import styled from 'styled-components'
 
-export const SidebarStyled = styled.div`
-  background: linear-gradient(0deg, rgba(91, 91, 91, 0.18), rgba(91, 91, 91, 0.18)), linear-gradient(180deg, rgba(11, 10, 138, 0.9) 29.17%, #6A9AE4 100%);
+export const SidebarStyled = styled.aside`
+  /* background: linear-gradient(0deg, rgba(91, 91, 91, 0.18), rgba(91, 91, 91, 0.18)), linear-gradient(180deg, rgba(11, 10, 138, 0.9) 29.17%, #6A9AE4 100%); */
+  background: #FBFBFB;
+  box-shadow: 0px 0px 66px rgba(0, 0, 0, 0.08);
 
-  #brand {
+  /* padding: 1.5rem 1.125rem; */
+  padding: 1.5rem 0.3rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+  #menu-title {
     display: flex;
-    justify-content: center;
-    gap: 1rem ;
+    align-items: center;
+    /* justify-content: center; */
+    padding-left: 2.25rem;
+
+    gap: 1rem;
+
+    width: 100%;
     
-    height: 60px;
-    width: 80%;
+    color: var(--title);
 
-    margin: 0 auto;
+    /* margin: 2.25rem 0; */
+    margin-bottom: 1.5rem;
+  }
 
-    border-bottom: 1px solid #dfdfdf85;
+  #hide-sidemenu-btn {
+    display: flex;
+    align-items: center;
+    line-height: 0;
 
-    h1.brand-title {
-      font-family: "tayayaFont";
+    color: #AAA9E5;
 
-      align-self: center;
-      color: #fff;
-      
-      letter-spacing: 0.2rem;
+    svg {
+      margin: 0 0.6rem;
+    }
+
+    path {
+      stroke: #AAA9E5;
+
+    }
+  }
+  
+  /* ICON ONLY SIDEBAR */
+  &.hidden{
+    width: 5rem;
+    
+    .menu-title, #menu-title h2 {
+      display: none;
     }
     
-    .logo {
-      object-fit: contain;
-      max-width: 2.5rem;
+    #menu-title, #hide-sidemenu-btn {
+      display: flex;
+      justify-content: center;
+      padding: 0;
     }
-    a {
-      text-decoration: none;
+    
+    #hide-sidemenu-btn {
+      transform: rotate(180deg);
     }
+  }
+
+  @media(max-width: 800px) {
+    display: none;
   }
 
 `

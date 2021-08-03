@@ -2,16 +2,62 @@ import styled from 'styled-components'
 
 export const HeaderStyled = styled.header`
   display: grid;
-  grid-template-columns: 30% auto;
+  grid-template-columns: minmax(10rem, 260px) 30% auto;
 
-  height: 60px;
+  margin: 0 0.5rem;
+
+  /* height: 60px; */
   align-items: center;
+  /* margin-bottom: 0.5rem; */
 
   color: #FFF;
 
+  border-radius: 0 0 15px 15px;
+  /* background: rgba(44, 44, 136, 0.8); */
+  background: #2a51dc;
+
+  #brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem ;
+    
+    height: 60px;
+    width: 80%;
+
+    margin: 0 auto;
+
+    border-bottom: 1px solid #dfdfdf85;
+
+    color: #fff;
+
+    h1.brand-title {
+      /* font-family: "tayayaFont"; */
+      font-family: 'Nunito', sans-serif;
+
+      align-self: center;
+      /* font-weight: bolder; */
+      
+      letter-spacing: 0.2rem;
+    }
+    
+    .logo {
+      object-fit: contain;
+      /* max-width: 2.5rem; */
+      height: 42px;
+    }
+
+    &::after {
+      content: '';
+      width: 1px;
+      height: 100px;
+      color: black;
+    }
+  }
+
   .page-title {
-    padding-left: 7.5rem;
-    color: #000;
+    padding-left: 4.5rem;
+
 
   }
 
@@ -25,10 +71,8 @@ export const HeaderStyled = styled.header`
 
     justify-content: flex-end;
 
-    border-radius: 0 0 0 45px;
     padding-right: 2rem ;
 
-    background: rgba(44, 44, 136, 0.8);
 
     > input {
       height: 2rem; 
@@ -48,9 +92,21 @@ export const HeaderStyled = styled.header`
         fill: #FFF;
       }
     }
-     #username {
-       font-weight: 300;
-     }
+    button {
+      display: flex;
+      align-items: center;
+
+      gap: 0.5rem;
+
+      #username {
+        color: white;
+        font-weight: 300;
+      }
+
+      svg {
+       margin-top: 5px;
+      }
+    }
   }
 
 
