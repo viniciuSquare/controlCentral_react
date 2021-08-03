@@ -21,9 +21,7 @@ export const SidebarStyled = styled.aside`
     gap: 1rem;
 
     width: 100%;
-
-    border: none;
-    background: transparent;
+    
     color: var(--title);
 
     /* margin: 2.25rem 0; */
@@ -35,9 +33,6 @@ export const SidebarStyled = styled.aside`
     align-items: center;
     line-height: 0;
 
-    cursor: pointer;
-    background: transparent;
-    border: none;
     color: #AAA9E5;
 
     svg {
@@ -51,7 +46,7 @@ export const SidebarStyled = styled.aside`
   }
   
   /* ICON ONLY SIDEBAR */
-  &.hidden {
+  &.hidden{
     width: 5rem;
     
     .menu-title, #menu-title h2 {
@@ -67,6 +62,10 @@ export const SidebarStyled = styled.aside`
     #hide-sidemenu-btn {
       transform: rotate(180deg);
     }
+  }
+
+  @media(max-width: 800px) {
+    display: none;
   }
 
 `

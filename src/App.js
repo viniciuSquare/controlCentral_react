@@ -9,25 +9,28 @@ import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 
 import { AppStyled } from './styled'
+import { SessionContextProvider } from './contexts/DataContext';
 
 export default function App() {
   return (
-    <AppStyled>
+    <SessionContextProvider>
+      <AppStyled>
 
-      <BrowserRouter>
-        
-        <Header/>
-        
-        <div className="content">
-          <Sidebar/>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/tasks" component={Tasks} />
-            <Route path="/employees" component={Employees} />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    </AppStyled>
+        <BrowserRouter>
+          
+          <Header/>
+          
+          <div className="content">
+            <Sidebar/>
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/tasks" component={Tasks} />
+              <Route path="/employees" component={Employees} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </AppStyled>
+    </SessionContextProvider>
     
   );
 }

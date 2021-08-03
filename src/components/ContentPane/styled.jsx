@@ -13,6 +13,7 @@ export const ContentPaneStyled = styled.div`
   .container-head {
     display: flex;        
     align-items: center;
+    justify-content: space-between;
     
     gap: 0.4rem;
     padding: 0 1.5rem;

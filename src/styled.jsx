@@ -15,6 +15,14 @@ export const AppStyled = styled.div`
 
   }
 
+  button {
+    cursor: pointer;
+    
+    background: transparent;
+    border: none;
+
+  }
+
   display: grid;
   grid-template-rows: 60px calc(100vh - 60px);
   
@@ -33,6 +41,16 @@ export const AppStyled = styled.div`
 
     }
     background-color: var(--main-backgroud);
+
+  }
+
+  @media(max-width: 800px){
+    
+    font-size: 0.8rem;
+    .content {
+      display: flex;
+      max-width: 100vw;
+    }
 
   }
 

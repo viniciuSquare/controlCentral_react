@@ -8,3 +8,16 @@
   - What to use?
 
 
+  ----
+Data structure
+
+Task  
+
+  Requester
+  Description/subject
+  RequestedTo
+  CreatedAt
+  Status = inbox
+  
+  Logs
+

@@ -92,9 +92,21 @@ export const HeaderStyled = styled.header`
         fill: #FFF;
       }
     }
-     #username {
-       font-weight: 300;
-     }
+    button {
+      display: flex;
+      align-items: center;
+
+      gap: 0.5rem;
+
+      #username {
+        color: white;
+        font-weight: 300;
+      }
+
+      svg {
+       margin-top: 5px;
+      }
+    }
   }
 
 
