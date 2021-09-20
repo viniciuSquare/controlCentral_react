@@ -64,6 +64,18 @@ export const SidebarStyled = styled.aside`
     }
   }
 
+  .pageCategoriesList {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 0.5rem;
+    row-gap: 1rem;
+    h4{
+      text-align: center;
+      width: 3rem;
+    }
+  }
+
   @media(max-width: 800px) {
     display: none;
   }

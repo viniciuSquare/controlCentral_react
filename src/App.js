@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Home } from './pages/Home'
 import { Tasks } from './pages/Tasks';
 import { Employees } from './pages/Employees';
+import { Devices } from './pages/Devices';
 
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
@@ -18,14 +19,15 @@ export default function App() {
 
         <BrowserRouter>
           
-          <Header/>
+          <Header/> 
           
           <div className="content">
             <Sidebar/>
-            <Switch>
+            <Switch> 
               <Route path="/" exact component={Home} />
               <Route path="/tasks" component={Tasks} />
               <Route path="/employees" component={Employees} />
+              <Route path="/dispositivos" component={Devices} />
             </Switch>
           </div>
         </BrowserRouter>

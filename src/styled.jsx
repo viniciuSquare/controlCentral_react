@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const AppStyled = styled.div`
   * {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Roboto', sans-serif;
 
     text-decoration: none;
     --main-backgroud: #F5F6F8;
@@ -42,11 +42,16 @@ export const AppStyled = styled.div`
     }
     background-color: var(--main-backgroud);
 
+    /* SECTION LAYOUT */
+    .page-title {
+      font-size: 1.8rem;
+    }
   }
 
   @media(max-width: 800px){
     
     font-size: 0.8rem;
+
     .content {
       display: flex;
       max-width: 100vw;

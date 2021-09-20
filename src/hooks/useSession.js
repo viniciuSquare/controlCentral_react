@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SessionContext } from "./DataContext";
+import { SessionContext } from "../contexts/DataContext";
 
 export function useSession() {
   const value = useContext(SessionContext)

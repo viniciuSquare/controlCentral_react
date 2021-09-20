@@ -1,7 +1,7 @@
 import { EmployeesStyled } from "./styled";
 import { ContentPane } from '../../components/ContentPane'
 
-import userDataIcon from '../../assets/icon/user-data.svg'
+import userDataIcon from '../../assets/Icon/user-data.svg'
 
 
 

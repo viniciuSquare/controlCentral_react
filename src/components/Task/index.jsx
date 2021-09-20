@@ -1,6 +1,6 @@
 import { TaskStyled } from "./styled";
 
-import clockIcon from '../../assets/icon/clock-history.svg'
+import clockIcon from '../../assets/Icon/clock-history.svg'
 
 /**
  * TASK {

@@ -4,12 +4,13 @@ export function SidebarMenu({
   title,
   icon,
   path,
-  active = false 
+  // active = false 
 }) {
   return(
     <SidebarMenuStyled 
+      exact
       to={path} 
-      className={active && "active"} 
+      // className={active && "active"} 
     >
       <img 
         src={icon} 

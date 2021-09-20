@@ -1,7 +1,7 @@
 import { HeaderStyled } from "./styled";
 
 import logoImg from '../../assets/tayaya.png'
-import { useSession } from "../../contexts/useSession";
+import { useSession } from "../../hooks/useSession";
 
 export function Header() {
 

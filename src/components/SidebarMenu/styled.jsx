@@ -1,8 +1,8 @@
 import styled from "styled-components"
 
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
-export const SidebarMenuStyled = styled(Link)`
+export const SidebarMenuStyled = styled(NavLink)`
   display: flex;
 
   width: 100%;
