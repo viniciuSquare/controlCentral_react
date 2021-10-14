@@ -1,12 +1,12 @@
 CREATE TABLE `user` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `username` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(60) NOT NULL,
+  `username` varchar(40) DEFAULT NULL,
   `fk_user_sector` bigint DEFAULT NULL,
-  `contact_email` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `contact_GAccount` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `contact_ramal` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `contact_whatsapp` varchar(40) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contact_email` varchar(40) DEFAULT NULL,
+  `contact_GAccount` varchar(40) DEFAULT NULL,
+  `contact_ramal` varchar(45) DEFAULT NULL,
+  `contact_whatsapp` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 

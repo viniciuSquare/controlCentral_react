@@ -11,9 +11,9 @@ CREATE TABLE task (
   involved varchar(150),
 
   fk_task_requester bigint,
-  fk_location bigint,
-  fk_category bigint,
-  fk_status bigint,
+  fk_task_location bigint,
+  fk_task_category bigint,
+  fk_task_status bigint,
 
   PRIMARY KEY (id)
 );
@@ -41,23 +41,23 @@ CREATE TABLE location (
 );
 
 ALTER TABLE `controlcenter`.`task` 
-ADD INDEX `fk_status_idx` (`fk_status` ASC) VISIBLE,
-ADD INDEX `fk_category_idx` (`fk_category` ASC) VISIBLE,
-ADD INDEX `fk_location_idx` (`fk_location` ASC) VISIBLE;
+ADD INDEX `fk_task_status_idx` (`fk_task_status` ASC) VISIBLE,
+ADD INDEX `fk_task_category_idx` (`fk_task_category` ASC) VISIBLE,
+ADD INDEX `fk_task_location_idx` (`fk_task_location` ASC) VISIBLE;
 ;
 ALTER TABLE `controlcenter`.`task` 
-ADD CONSTRAINT `fk_status`
-  FOREIGN KEY (`fk_status`)
+ADD CONSTRAINT `fk_task_status`
+  FOREIGN KEY (`fk_task_status`)
   REFERENCES `controlcenter`.`task_status` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_category`
-  FOREIGN KEY (`fk_category`)
+ADD CONSTRAINT `fk_task_category`
+  FOREIGN KEY (`fk_task_category`)
   REFERENCES `controlcenter`.`task_category` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_location`
-  FOREIGN KEY (`fk_location`)
+ADD CONSTRAINT `fk_task_location`
+  FOREIGN KEY (`fk_task_location`)
   REFERENCES `controlcenter`.`location` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;

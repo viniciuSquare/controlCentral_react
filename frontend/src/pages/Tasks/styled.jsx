@@ -2,12 +2,21 @@ import styled from "styled-components";
 
 export const TasksStyled = styled.div`
   display: flex;
-  button{
-    background-color: aliceblue;
-    max-height: 80px;
-    width: 100%;
-    max-width: 10vw;
+  
+  .buttons-container {
+    display: flex;
+    align-items: center;
+    
+    button{
+      background-color: aliceblue;
+      max-height: 80px;
+      width: 100%;
+      max-width: 10vw;
+      /* DEFAULT STYLE */
+      line-height: 0;
+    }
   }
+
 
   table {
     thead, tr {
@@ -125,4 +134,8 @@ export const StyledNewTaskForm = styled.div`
 
   }
   
+`
+
+export const StyledTaskSettingsForm = styled.div`
+
 `

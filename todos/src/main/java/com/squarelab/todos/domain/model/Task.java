@@ -44,15 +44,15 @@ public class Task {
   private User requester;
   
   @ManyToOne
-  @JoinColumn(name = "fk_location")
+  @JoinColumn(name = "fk_task_location")
   private Location location;
   
   @ManyToOne
-  @JoinColumn(name = "fk_category")
+  @JoinColumn(name = "fk_task_category")
   private TaskCategory category;
   
   @ManyToOne
-  @JoinColumn(name = "fk_status")
+  @JoinColumn(name = "fk_task_status")
   private TaskStatus status;
 
   private int duration;

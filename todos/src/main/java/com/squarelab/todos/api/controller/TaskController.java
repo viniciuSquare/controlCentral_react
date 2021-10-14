@@ -5,6 +5,8 @@ import com.squarelab.todos.domain.repository.TaskRepository;
 import java.util.List;
 
 import com.squarelab.todos.domain.model.Task;
+import com.squarelab.todos.domain.model.embedded.TaskCategory;
+import com.squarelab.todos.domain.model.embedded.TaskStatus;
 import com.squarelab.todos.services.TaskService;
 
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,16 @@ public class TaskController {
   @ResponseStatus(HttpStatus.CREATED)
   public Task newTask(@RequestBody Task task) {
     return taskService.delegate(task);
+  }
+
+  @PostMapping(path = "/category")
+  public TaskCategory newCategory(@RequestBody TaskCategory category) {
+    return taskService.newCategory(category);
+  }
+
+  @PostMapping(path = "/status")
+  public TaskStatus newStatus(@RequestBody TaskStatus status) {
+    return taskService.newStatus(status);
   }
 
 }
