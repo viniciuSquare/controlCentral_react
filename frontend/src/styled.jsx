@@ -57,7 +57,7 @@ export const AppStyled = styled.div`
     /* APPLY ONLY TO THE CONTENT CONTAINER */
     > div:nth-child(2) {
 
-      width: 90%;
+      /* width: 90%; */
       margin: 0 auto;
 
       padding: 1.5rem;

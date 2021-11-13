@@ -16,7 +16,7 @@ import clockIcon from '../../assets/Icon/clock-history.svg'
  * } 
  * **/
 
-export function Task() {
+export function TaskItem() {
   return(
     <TaskStyled className="task">
       <div className="task-head">

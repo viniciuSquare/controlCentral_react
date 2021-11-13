@@ -21,8 +21,8 @@ public class Device {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String alias;
-  private String hostname;
-  private String model;
+  private String hostname; // TO REMOVE
+  private String model; // TO REMOVE
   private String macCable;
   private String macWireless;
   private String ipCable;

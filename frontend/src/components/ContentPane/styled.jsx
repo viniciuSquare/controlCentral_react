@@ -11,6 +11,9 @@ export const ContentPaneStyled = styled.div`
   /* box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.17); */
   /* margin: 0 2rem; */
   /* margin: auto; */
+  background: rgba(129, 144, 194, 0.12);
+  box-shadow: 0px 5px 49px 10px rgba(106, 132, 208, 0.1);
+  border-radius: 4px;
 
   .container-head {
     display: flex;        
@@ -63,7 +66,7 @@ export const ContentPaneStyled = styled.div`
   /* APPLICABLE CUSTOM SETTINGS */
 
   &.single-container {
-    max-width: 1000px;
+    max-width: 930px;
   }
   
   /* SET SMALL CLASS ATTRIBUTES */

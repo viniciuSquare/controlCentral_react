@@ -40,7 +40,14 @@ export function Tasks() {
       <ContentPane 
         title={
           <div className="list-head">
-            <h2>Tarefas</h2>
+            <div className="title-n-filters">
+              <h2 id="title">Tarefas</h2>
+              <div className="filters">
+                <button>Todas</button>  
+                <button>Hoje</button>  
+                <button>Pendente</button> 
+              </div>
+            </div>
             <div className="buttons-container">
               <button 
                 onClick={ toggleNewTaskModalVisibility }>
@@ -60,7 +67,7 @@ export function Tasks() {
         } 
         // main
         // medium
-        // singleContainer
+        singleContainer
       >
         <table>
           <thead>
@@ -95,9 +102,10 @@ export function Tasks() {
         </table>
         
       </ContentPane>
-      <div className="right-side">
-        <button>Due today</button>  
-      </div>
+      {/* <div className="right-side">
+        <button>Hoje</button>  
+        <button>Pendente</button>  
+      </div> */}
     </TasksStyled>
   )
 

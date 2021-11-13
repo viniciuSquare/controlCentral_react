@@ -12,11 +12,7 @@ export function SidebarMenu({
       to={path} 
       // className={active && "active"} 
     >
-      <img 
-        src={icon} 
-        alt={title} 
-        className="menu-icon"
-      />
+      {icon}
       <h3 className="menu-title" >{title}</h3>
     </SidebarMenuStyled>
   )

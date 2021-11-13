@@ -2,10 +2,35 @@ import styled from "styled-components";
 import Modal from '../../components/Modal'
 
 export const StyledDevicesPage = styled.div`
-  &.visual-test{
-    /* background-color: #a7b117b7; */
+  display: grid;
+  grid-template-columns: 20% auto 10%;
+  
+  width: 100%;
+
+  .left-side {
+    padding-top: 3rem;
+    .container-head {
+      display: flex;
+      justify-content: space-between;
+      margin-right: 1.5rem;
+    }
+    .pageCategoriesList {
+      margin: 1rem;
+      li {
+        height: 3rem;
+        .category-initial-letter {
+          width: 20px;
+          text-align: center;
+          text-transform: uppercase;
+          margin-right: 1rem;
+        }
+      }
+    }
   }
 
+  .right-side {
+    background-color: lightcoral;
+  }
 
 `
 export const StyledNewDeviceForm = styled.div`

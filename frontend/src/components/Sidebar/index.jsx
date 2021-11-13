@@ -5,30 +5,30 @@ import {SidebarStyled} from  './styled'
 import { SidebarMenu } from '../SidebarMenu'
 
 import { useData } from '../../hooks/useData'
+import { useSession } from '../../hooks/useSession'
 
 import classNames from 'classnames'
 
-import homeIcon from '../../assets/Icon/home.svg'
 import menuIcon from '../../assets/Icon/menu.svg'
-import userIcon from '../../assets/Icon/user.svg'
-import todoIcon from '../../assets/Icon/todo.svg'
-import phoneIcon from '../../assets/Icon/phone.svg'
-import devicesIcon from '../../assets/Icon/devices-icon.svg'
 
-import { BrowserRouter } from 'react-router-dom'
-import { useSession } from '../../hooks/useSession'
+import { 
+  BsHouseDoor, 
+  BsListCheck,
+  BsDisplay,
+  BsTelephone,
+  BsPeople,
+  BsSignpost
+} from 'react-icons/bs'
 
 
 export function Sidebar() {
+  const iconSize = 28;
+
   const {isSidebarOpen, setIsSidebarOpen} = useSession();
 
   const { 
     pageCategories,
     setPageCategories, getDevicesCategories } = useData()
-
-  useEffect(()=>{
-    // setPageCategories(getDevicesCategories());
-  },[])
 
   useEffect(()=>{
     console.log(pageCategories)
@@ -52,16 +52,15 @@ export function Sidebar() {
           <h2>menu</h2>
         </button>
 
-        <BrowserRouter>
-          <nav>
-            <SidebarMenu title="Home" icon={homeIcon} path="/" />
-            <SidebarMenu title="Employees" icon={userIcon} path="/employees" />
-            <SidebarMenu title="Ramals" icon={phoneIcon} path="/ramals" />
-            <SidebarMenu title="To-do" icon={todoIcon} path="/tasks" />
-            <SidebarMenu title="Dispositivos" icon={devicesIcon} path="/dispositivos" />
-          </nav>
-        </BrowserRouter>
-        <div className="pageCategoriesList">
+        <nav>
+          <SidebarMenu title="Home" icon={<BsHouseDoor size={iconSize}/>} path="/" />
+          <SidebarMenu title="Employees" icon={<BsPeople size={iconSize}/>} path="/employees" />
+          <SidebarMenu title="Ramals" icon={<BsTelephone size={iconSize}/>} path="/ramals" />
+          <SidebarMenu title="Dispositivos" icon={<BsDisplay size={iconSize}/>} path="/dispositivos" />
+          <SidebarMenu title="To-do" icon={<BsListCheck size={iconSize}/>} path="/tasks" />
+          <SidebarMenu title="Locais e setores" icon={<BsSignpost size={iconSize}/>} path="locais"/>
+        </nav>
+        {/* <div className="pageCategoriesList">
           {
             pageCategories.length > 0 ? pageCategories.map( category => {
               return (
@@ -75,7 +74,7 @@ export function Sidebar() {
               )
             }) : null
           }
-        </div>
+        </div> */}
 
       </div>
 

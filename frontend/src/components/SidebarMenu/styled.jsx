@@ -7,7 +7,6 @@ export const SidebarMenuStyled = styled(NavLink)`
 
   width: 100%;
   height: 3rem;
-  margin: .125rem auto;
 
   align-items: center;
 
@@ -20,15 +19,14 @@ export const SidebarMenuStyled = styled(NavLink)`
   &.hidden {
 
   }
+  
+  svg {
+    margin: 0 1rem 0 1.75rem;
 
-  img {
-    max-width: 1.5rem;
+    /* max-width: 1.5rem;
     margin: 0;
     padding: 0;
-
-  }  
-  .menu-icon {
-    margin: 0 1.6rem;
+    margin: 0 1.6rem; */
   }
 
   &.active {

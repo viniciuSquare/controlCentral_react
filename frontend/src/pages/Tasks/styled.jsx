@@ -2,16 +2,42 @@ import styled from "styled-components";
 
 export const TasksStyled = styled.div`
   display: flex;
+
+  .title-n-filters {
+    display: flex;
+    align-items: center;
+
+    #title {
+      margin-right: 1.5rem;
+    }
+    .filters {
+      button {
+        height: 2.5rem;
+        font-size: 1rem;
+
+        margin-right: 2rem ;
+
+        &:not(:last-child){
+          /* border-right: 1px solid #74747461; */
+        }
+
+      }
+    }
+  }
   
   .buttons-container {
     display: flex;
     align-items: center;
+
+    width: 300px;
     
     button{
       background-color: aliceblue;
+      height: 2rem;
       max-height: 80px;
+
       width: 100%;
-      max-width: 10vw;
+      max-width: 10vw; 
       /* DEFAULT STYLE */
       line-height: 0;
     }
@@ -24,6 +50,30 @@ export const TasksStyled = styled.div`
     }
     tr {
       height: 3rem !important;
+    }
+  }
+
+  .right-side {
+    /* background-color: red; */
+    width: 100%;
+    max-width: 260px;
+
+    margin-top: 4rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    button {
+      width: 100%;
+      background-color: #e0e0e06c;
+      height: 2.5rem;
+      font-size: large;
+
+      &:not(:last-child){
+        border-bottom: 1px solid #74747461;
+      }
+
     }
   }
   

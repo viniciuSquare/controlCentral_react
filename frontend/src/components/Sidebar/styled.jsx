@@ -4,6 +4,7 @@ export const SidebarStyled = styled.aside`
   /* background: linear-gradient(0deg, rgba(91, 91, 91, 0.18), rgba(91, 91, 91, 0.18)), linear-gradient(180deg, rgba(11, 10, 138, 0.9) 29.17%, #6A9AE4 100%); */
   
   /* background: #FBFBFB; */
+  background: #C8D4FF;
   /* box-shadow: 0px 0px 66px rgba(0, 0, 0, 0.08); */
 
   /* padding: 1.5rem 1.125rem; */

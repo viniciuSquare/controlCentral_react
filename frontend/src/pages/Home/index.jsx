@@ -1,7 +1,7 @@
 import { HomeStyled } from './styled.jsx'
 
 import { ContentPane } from '../../components/ContentPane/index.jsx';
-import { Task } from '../../components/Task/index.jsx';
+import { TaskItem } from '../../components/Task/index.jsx';
 
 // mock data
 import salaryImg from '../../assets/images/salary.jpeg'
@@ -16,8 +16,8 @@ export function Home() {
           </>}
       >            
         <div className="tasks-pane">
-          <Task />
-          <Task />
+          <TaskItem />
+          <TaskItem />
         </div>
       </ContentPane>
       
