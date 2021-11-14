@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Devices {
+  id                  Int                    @id @default(autoincrement())
+  alias               String
+  category            DeviceCategories?      @relation(fields: [deviceCategoryId], references: [id])
+  specification       String?
+  macCable            String?
+  macWireless         String?
+  ipCable             String?
+  ipWireless          String?
+  state               String?
+  isSource            Boolean?
+  operationalCategory OperationalCategories? @relation(fields: [operationalCategoriesId], references: [id])
+
+  UserDevice              UserDevices[]
+  deviceCategoryId        Int?
+  operationalCategoriesId Int?
+}
+
+model DeviceCategories {
+  id       Int     @id @default(autoincrement())
+  title    String
+  isNetDev Boolean @db.TinyInt
+
+  Devices Devices[]
+}
+
+model OperationalCategories {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String?
+
+  Devices   Devices[]
+  Locations Locations[]
+}
+
+model Tasks {
+  id          Int              @id @default(autoincrement())
+  subject     String
+  description String
+  category    ActionCategories @relation(fields: [actionCategoriesId], references: [id])
+  location    Locations?       @relation(fields: [locationsId], references: [id])
+  requester   User?            @relation(fields: [userId], references: [id])
+  status      ActionStatus     @relation(fields: [actionStatusId], references: [id])
+  priority    String
+  createdAt   DateTime
+  ticket      String
+
+  locationsId        Int
+  actionCategoriesId Int
+  actionStatusId     Int
+  userId             Int
+}
+
+model ActionCategories {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+
+  Tasks Tasks[]
+}
+
+model ActionStatus {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+
+  Tasks Tasks[]
+}
+
+model Locations {
+  id                  Int                    @id @default(autoincrement())
+  title               String
+  operationalCategory OperationalCategories? @relation(fields: [operationalCategoriesId], references: [id])
+
+  UserDevices             UserDevices[]
+  Tasks                   Tasks[]
+  User                    User[]
+  operationalCategoriesId Int?
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  name       String
+  username   String    @unique
+  department Locations @relation(fields: [locationsId], references: [id])
+
+  locationsId Int
+  UserDevices UserDevices[]
+  Tasks       Tasks[]
+}
+
+model UserDevices {
+  id                Int                 @id @default(autoincrement())
+  location          Locations           @relation(fields: [locationId], references: [id])
+  user              User                @relation(fields: [userId], references: [id])
+  device            Devices             @relation(fields: [devicesId], references: [id])
+  locationId        Int
+  devicesId         Int
+  Services_accounts Services_accounts[]
+  userId            Int
+}
+
+model Services_accounts {
+  id             Int         @id @default(autoincrement())
+  serviceName    String
+  accountAddress String
+  deviceUsage    UserDevices @relation(fields: [userDevicesId], references: [id])
+
+  userDevicesId Int
+}
