@@ -8,21 +8,58 @@ export const StyledDevicesPage = styled.div`
   width: 100%;
 
   .left-side {
-    padding-top: 3rem;
+    padding-top: 1rem;
     .container-head {
       display: flex;
       justify-content: space-between;
-      margin-right: 1.5rem;
+      /* margin-right: 1.5rem; */
     }
-    .pageCategoriesList {
-      margin: 1rem;
-      li {
-        height: 3rem;
-        .category-initial-letter {
-          width: 20px;
-          text-align: center;
-          text-transform: uppercase;
-          margin-right: 1rem;
+
+    .l-content {
+      display: flex;
+      flex-direction: column;
+      width: 95%;
+      
+      .pageCategoriesList {
+        margin: 1rem 0;
+  
+        li {
+          display: flex;
+          flex: 1;
+          justify-content: space-between;
+  
+          height: 3rem;
+        }
+      }
+
+      .left-side-menu{
+        padding-right: 0.5rem;
+
+        input#new-category-title, button#toggle-new-device-modal {
+          width: 100%;
+        }
+
+        button#toggle-new-device-modal {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .new-category-modal {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          
+          margin: 1rem 0;
+          
+          div {
+            width: 100%;
+          }
+
+          input {
+            padding-left: 0.5rem;
+            height: 1.6rem;
+          }
         }
       }
     }
@@ -31,8 +68,38 @@ export const StyledDevicesPage = styled.div`
   .right-side {
     background-color: lightcoral;
   }
+  
+  /* GENERAL SETTINGS */
+  .align-horizontal {
+    display: flex;
+    align-items: center;
+
+    &.spaced {
+      justify-content: space-between;
+
+    }
+  }
+
+  /* MAIN CONTENT */
+  .list-head {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 8px 0;
+    .tools {
+      display: flex;
+      gap: 2rem;
+    }
+  }
+  .device-tools {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    
+  }
 
 `
+
 export const StyledNewDeviceForm = styled.div`
   display: flex;
   flex-direction: column;

@@ -82,6 +82,7 @@ model ActionStatus {
 model Locations {
   id                  Int                    @id @default(autoincrement())
   title               String
+  description         String?
   operationalCategory OperationalCategories? @relation(fields: [operationalCategoriesId], references: [id])
 
   UserDevices             UserDevices[]

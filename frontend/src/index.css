@@ -9,3 +9,7 @@
   font-family: "tayayaFont";
   src: url("./font/CTMercuriusStd-Light.otf");
 }
+
+button {
+  line-height: 0;
+}

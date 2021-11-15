@@ -1,6 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
-export const DataContext = createContext({})
+import api from "../api/api";
 
 const MOCK_DATA = {
   loggedUser : {
@@ -64,23 +64,28 @@ const MOCK_DATA = {
     },
   ]
 }
-const getDevicesCategories = () => {
-  let devicesCategories = MOCK_DATA.devices.map( dev => {
-    return dev.category
-  })
 
-  return devicesCategories;
-}
+export const DataContext = createContext({})
 
 export function DataContextProvider(props) {
-  
+ 
   // TODO - MOVE TO NEWER CONTEXT
-  const [ loggedUser, setLoggedUser ] = useState(MOCK_DATA.loggedUser);
+  // const [ loggedUser, setLoggedUser ] = useState(MOCK_DATA.loggedUser);
+  const loggedUser = "  ";
   
   const [ tasks, setTasks ] = useState(MOCK_DATA.tasks);
   const [ devices, setDevices ] = useState(MOCK_DATA.devices);
 
   const [ pageCategories, setPageCategories ] = useState({})
+
+
+  const getDevicesCategories = () => {
+    let devicesCategories = devices.map( dev => {
+      return dev.category
+    })
+  
+    return devicesCategories;
+  }
 
   return (
     <DataContext.Provider
