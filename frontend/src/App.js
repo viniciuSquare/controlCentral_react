@@ -9,8 +9,7 @@ import { Knowledge } from './pages/Knowledge';
 
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
-// import { Sidebar } from './evaluation/Sidebar-2';
-
+import { LocationsPage } from './pages/Locations';
 
 import classNames from "classnames";
 
@@ -26,18 +25,20 @@ export default function App() {
         {/* CONTEXTS */}
         <AppStyled className={classNames(isSidebarOpen ? "sidebar-open" : "sidebar-closed")}>
           <BrowserRouter>
-            
-            <Header/> 
-            
+            <Sidebar id="sidebar-menu"/>            
             <div className="content">
-              <Sidebar id="sidebar-menu"/>
+              <Header/> 
               <Switch> 
                 <Route path="/" exact component={Home} />
                 <Route path="/tarefas" component={Tasks} />
                 <Route path="/tarefas/:taskId" component={Tasks} />
+
                 <Route path="/funcionarios" component={Employees} />
+
                 <Route path="/dispositivos" component={Devices} />
                 <Route path="/dispositivos/:category" exact component={Devices} />
+
+                <Route path="/locais" component={LocationsPage} />
                 <Route path="/base-conhecimento" component={Knowledge} />
               </Switch>
             </div>

@@ -1,35 +1,11 @@
-const {PrismaClient} = require('@prisma/client')
+const { 
+  GetLocationsService, 
+  CreateLocationService
+} = require('../services/LocationsServices');
 
-class CreateLocationController {
-  async handle(request, response) {
-    const prisma = new PrismaClient();
-    let {
-      title,
-      description,
-      operationCategory
-    } = request.body;
-    
-    const location = await prisma.locations.create({
-      data: {
-        title,
-        description,
-        operationCategory
-      }
-    })
+const locationsRouter = require('express').Router();
 
-    response.status(201).json(location);
-  }
-}
+locationsRouter.post('/', new CreateLocationService().handle)
+locationsRouter.get('/',  new GetLocationsService().handle)
 
-class GetLocations {
-  async handle (request, response) {
-    const prisma = new PrismaClient();
-
-    const locations = await prisma.locations.findMany();
-
-    response.json(locations)
-  }
-
-}
-
-module.exports = {CreateLocationController, GetLocations}
+module.exports = locationsRouter

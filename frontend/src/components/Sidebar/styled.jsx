@@ -2,22 +2,54 @@ import styled from 'styled-components'
 
 export const SidebarStyled = styled.aside`
   /* background: linear-gradient(0deg, rgba(91, 91, 91, 0.18), rgba(91, 91, 91, 0.18)), linear-gradient(180deg, rgba(11, 10, 138, 0.9) 29.17%, #6A9AE4 100%); */
-  
-  /* background: #FBFBFB; */
-  background: #C8D4FF;
-  /* box-shadow: 0px 0px 66px rgba(0, 0, 0, 0.08); */
 
-  /* padding: 1.5rem 1.125rem; */
-  padding: 1.5rem 0.3rem;
+  background: #EBF1FD;
+
+  padding: 0 0.3rem;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  #brand-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem ;
+    
+    height: 60px;
+    width: 80%;
+
+    margin: 0 auto;
+    margin-bottom: 1rem;
+
+    border-bottom: 1px solid #dfdfdf85;
+
+    color: #fff;
+
+    h1.brand-title {
+      font-family: "tayayaFont";
+      letter-spacing: 0.2rem;
+
+      align-self: center;
+    }
+    
+    .logo {
+      object-fit: contain;
+      height: 38px;
+    }
+
+    /* &::after {
+      content: '';
+      width: 1px;
+      height: 100px;
+      color: black;
+    } */
+  }
   
   #menu-title {
     display: flex;
     align-items: center;
-    /* justify-content: center; */
     padding-left: 2.25rem;
 
     gap: 1rem;
@@ -36,6 +68,7 @@ export const SidebarStyled = styled.aside`
     line-height: 0;
 
     color: #AAA9E5;
+    margin-bottom: 1.5rem;
 
     svg {
       margin: 0 0.6rem;
@@ -50,7 +83,7 @@ export const SidebarStyled = styled.aside`
   /* ICON ONLY SIDEBAR */
   &.hidden{
     width: 5rem;
-    
+
     .menu-title, #menu-title h2, .pageCategoryLink p {
       display: none;
     }

@@ -8,6 +8,8 @@ export const ModalStyled = styled.div`
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.208);
 
+  z-index: 5;
+
   display: flex;
 
   .modal-title {

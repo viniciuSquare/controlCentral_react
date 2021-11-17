@@ -1,13 +1,20 @@
 import styled from "styled-components";
 
 export const TasksStyled = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 20% auto 10%;
+
+  .container-pane {
+    display: grid;
+    grid-template-rows: 5rem minmax(30%, 50%) auto;
+  }
 
   .title-n-filters {
     display: flex;
     align-items: center;
+  }
 
-    #title {
+    /* #title {
       margin-right: 1.5rem;
     }
     .filters {
@@ -18,18 +25,18 @@ export const TasksStyled = styled.div`
         margin-right: 2rem ;
 
         &:not(:last-child){
-          /* border-right: 1px solid #74747461; */
+          border-right: 1px solid #74747461;
         }
 
       }
-    }
-  }
+    } */
   
   .buttons-container {
     display: flex;
     align-items: center;
 
     width: 300px;
+    background-color: red;
     
     button{
       background-color: aliceblue;
@@ -43,7 +50,6 @@ export const TasksStyled = styled.div`
     }
   }
 
-
   table {
     thead, tr {
       grid-template-columns: 2fr 2fr 2fr 1.5fr 1.5fr 1.5fr !important; 
@@ -51,6 +57,10 @@ export const TasksStyled = styled.div`
     tr {
       height: 3rem !important;
     }
+  }
+
+  .preview-pane {
+    background-color: red;
   }
 
   .right-side {

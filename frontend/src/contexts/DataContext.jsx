@@ -78,15 +78,6 @@ export function DataContextProvider(props) {
 
   const [ pageCategories, setPageCategories ] = useState({})
 
-
-  const getDevicesCategories = () => {
-    let devicesCategories = devices.map( dev => {
-      return dev.category
-    })
-  
-    return devicesCategories;
-  }
-
   return (
     <DataContext.Provider
       value={
@@ -94,9 +85,7 @@ export function DataContextProvider(props) {
           loggedUser,
           tasks,
           devices,
-          pageCategories, setPageCategories,
-          getDevicesCategories
-          
+          pageCategories, setPageCategories          
         }
       }
     >

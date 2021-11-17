@@ -7,7 +7,6 @@ import { BsLink45Deg, BsNodePlus, BsPersonLinesFill, BsPlus } from 'react-icons/
 import { useData } from '../../hooks/useData'
 import api from '../../api/api';
 
-import { ContentPane } from '../../components/ContentPane'
 import { NewDeviceModal } from './NewDeviceModal';
 
 export function Devices() {
@@ -53,7 +52,7 @@ export function Devices() {
   console.log(category)
 
   return (
-    <StyledDevicesPage className="visual-test">
+    <StyledDevicesPage>
       <div className="left-side">
         <div className="container-head">
           <h3 className="title">
@@ -113,7 +112,7 @@ export function Devices() {
 
       <div className="container-pane">
         <div className="head">
-          <div className="list-head">
+          <div className="title-n-tools">
             <h1 className="page-title">Dispositivos</h1>
             <div className="tools">
               <input type="text" />

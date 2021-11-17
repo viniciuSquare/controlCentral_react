@@ -65,6 +65,11 @@ export const StyledDevicesPage = styled.div`
     }
   }
 
+  tr, thead {
+    grid-template-columns: 2fr 2fr 2fr 1.5fr 1.5fr;
+  }
+
+
   .right-side {
     background-color: lightcoral;
   }
@@ -81,7 +86,7 @@ export const StyledDevicesPage = styled.div`
   }
 
   /* MAIN CONTENT */
-  .list-head {
+  .title-n-tools {
     display: flex;
     justify-content: space-between;
 

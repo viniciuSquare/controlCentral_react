@@ -36,17 +36,17 @@ export function Tasks() {
         isTaskSettingsModalVisible &&
           <TaskSettingsModal closer={toggleTaskSettingsModalVisibility}/>
       }
-      
-      <ContentPane 
-        title={
-          <div className="list-head">
-            <div className="title-n-filters">
-              <h2 id="title">Tarefas</h2>
-              <div className="filters">
-                <button>Todas</button>  
-                <button>Hoje</button>  
-                <button>Pendente</button> 
-              </div>
+      <div className="left-side">
+
+      </div>
+      <div className="container-pane">
+        <div className="list-head">
+          <div className="title-n-tools">
+            <h2 id="title">Tarefas</h2>
+            <div className="filters">
+              <button className="filter-btn">Todas</button>  
+              <button className="filter-btn">Hoje</button>  
+              <button className="filter-btn">Pendente</button> 
             </div>
             <div className="buttons-container">
               <button 
@@ -64,20 +64,16 @@ export function Tasks() {
               </button>
             </div>
           </div>
-        } 
-        // main
-        // medium
-        singleContainer
-      >
+        </div>
         <table>
           <thead>
             <th className="task-id" >Id</th>
-            <th className="task-title" >Title</th>
+            <th className="task-title" >Assunto</th>
+            <th className="task-lastUpdate" >Setor/Local</th>
             {/* <th className="task-createdBy" >Created by</th> */}
             <th className="task-category" >Categoria</th>
             <th className="task-createdAt" >Created at</th>
             <th className="task-status" >Status</th>
-            <th className="task-lastUpdate" >Last update</th>
           </thead>
           <tbody>
             <tr>
@@ -100,12 +96,15 @@ export function Tasks() {
             </tr>
           </tbody>
         </table>
-        
-      </ContentPane>
-      {/* <div className="right-side">
+        <div className="preview-pane">
+          
+        </div>
+      </div>
+
+      <div className="right-side">
         <button>Hoje</button>  
         <button>Pendente</button>  
-      </div> */}
+      </div>
     </TasksStyled>
   )
 

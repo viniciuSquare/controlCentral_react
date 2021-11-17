@@ -7,30 +7,24 @@ export const SidebarMenuStyled = styled(NavLink)`
 
   width: 100%;
   height: 3rem;
+  margin: 4px 0;
 
   align-items: center;
 
-  background: #C8D4FF;
   border-radius: 3px;
-  color: white;
+  color: #13138096;
+  background-color: #D8E2FB;
+  letter-spacing: 0.4px;
 
   line-height: 0;
 
-  &.hidden {
-
-  }
-  
   svg {
-    margin: 0 1rem 0 1.75rem;
-
-    /* max-width: 1.5rem;
-    margin: 0;
-    padding: 0;
-    margin: 0 1.6rem; */
+    margin: 0 1rem 0 1.25rem;
   }
 
   &.active {
-    background: #2a50dcab;
+    background: rgba(58, 111, 233, 0.7);
+    color: #fbfcff;
     position: relative;
     
     &::before {

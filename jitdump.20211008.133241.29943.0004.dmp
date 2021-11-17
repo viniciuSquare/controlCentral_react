@@ -1,8 +1,0 @@
-<?xml version="1.0" standalone="no"?>
-<jitDump>
-#INFO: Crashed in compilation thread 000000000A2AEE00.
-<currentIL>
-Compilation Failed Because: Compilation interrupted by GC unloading classes
-
-=== EXCEPTION THROWN (Compilation Interrupted) ===
-</jitDump>
