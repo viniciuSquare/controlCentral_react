@@ -19,14 +19,21 @@ export const ModalStyled = styled.div`
   .modal-content {
     background-color: white;
     min-height: 30vh;
-    width: 62vw;
+    max-height: 90vh;
+    width: 55vw;
 
     padding: 1.2rem 1.5rem 2.5rem;
     margin: auto;
 
     border-radius: 8px;
-    transform: translateY(-5%);
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
+  
+  .modal-content::-webkit-scrollbar {
+      display: none;
+
+    }
   /* TODO */
     /* MEDIA QUERY 965px */
     /* MEDIA QUERY 728px */

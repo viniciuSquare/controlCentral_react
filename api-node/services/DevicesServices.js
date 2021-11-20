@@ -14,7 +14,8 @@ class CreateDeviceService  {
       ipCable, 
       ipWireless, 
       state,
-      ramal 
+      ramal,
+      operationalCategory
     } = request.body;
 
     if(!state) state = "Definir";
@@ -30,7 +31,8 @@ class CreateDeviceService  {
         ipCable, 
         ipWireless, 
         state,
-        ramal 
+        ramal,
+        operationalCategoriesId: operationalCategory
       }
     });
 
@@ -42,7 +44,12 @@ class GetDevicesService {
   async handle(request, response) {
     const prisma = new PrismaClient();
 
-    const allDevicesCategories = await prisma.devices.findMany();
+    const allDevicesCategories = await prisma.devices.findMany({
+      include: {
+        operationalCategory: true,
+        category: true
+      }
+    });
 
     response.json(allDevicesCategories);
   }
@@ -90,10 +97,50 @@ class GetDeviceCategories {
   }
 }
 
+// DEVICE USER
+class EditDevice {
+  async handle(request, response) {
+    let {
+      id, 
+      alias, 
+      category, 
+      specification, 
+      macCable, 
+      macWireless, 
+      ipCable, 
+      ipWireless, 
+      state,
+      ramal,
+      operationalCategoriesId
+    } = request.body;
+
+    const prisma = new PrismaClient();
+    const device = await prisma.devices.update({
+      where: {
+        id
+      },
+      data: {
+        alias, 
+        category, 
+        specification, 
+        macCable, 
+        macWireless, 
+        ipCable, 
+        ipWireless, 
+        state,
+        ramal,
+        operationalCategoriesId
+      }
+    })
+    response.json(device);
+  }
+}
+
 module.exports = { 
   CreateDeviceService, 
   GetDevicesService, 
   GetDevice,
   CreateDeviceCategoryController, 
-  GetDeviceCategories
+  GetDeviceCategories,
+  EditDevice
 }

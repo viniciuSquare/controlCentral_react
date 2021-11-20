@@ -2,6 +2,7 @@ import { HeaderStyled } from "./styled";
 
 import { useData } from "../../hooks/useData";
 import {  } from "react-router";
+import { BsSearch } from "react-icons/bs";
 
 export function Header(props) {
 
@@ -14,7 +15,8 @@ export function Header(props) {
       {/* // TODO */}
       
       <div className="header-body" >
-        <input type="text" id="page-search" />
+        <BsSearch/>
+        <input type="text" id="page-search"/>
 
         <div className="tools">
           <span id="notification-icon">

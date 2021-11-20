@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Modal from '../../components/Modal'
 
 export const StyledDevicesPage = styled.div`
   display: grid;
@@ -64,11 +63,13 @@ export const StyledDevicesPage = styled.div`
       }
     }
   }
-
+  .field-group-name {
+    opacity: 0.6;
+    margin-top: 1rem;
+  }
   tr, thead {
     grid-template-columns: 2fr 2fr 2fr 1.5fr 1.5fr;
   }
-
 
   .right-side {
     background-color: lightcoral;
@@ -121,6 +122,23 @@ export const StyledNewDeviceForm = styled.div`
       width: 10rem;
     }
   }
+  /* .inputs-to-hide {
+    width: 100%;
+    background: blue;
+
+    &::before {
+      content: " ";
+      position: relative;
+      width: 40%;
+      height: 1px;
+      color: blue;
+    }
+
+    button {
+      width: 100%;
+      background: white;
+    }
+  } */
 
   form  {
     display: flex;

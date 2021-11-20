@@ -16,6 +16,10 @@
   box-sizing: border-box;
 }
 
+.title {
+  color: var(--title);
+}
+
 button {
   cursor: pointer;
   

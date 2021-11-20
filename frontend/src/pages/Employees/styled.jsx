@@ -2,6 +2,13 @@ import styled from 'styled-components'
 import { ContentPane } from '../../components/ContentPane'
 
 export const EmployeesStyled = styled.div`
+  display: grid;
+  grid-template-columns: 20% auto 10%;
+
+  .pane-content{
+    width: 100%;
+  }
+
   #employees-table {
     display: flex;
     flex-direction: column;

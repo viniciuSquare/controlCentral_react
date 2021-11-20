@@ -6,17 +6,15 @@ class CreateOperationalCategoryService {
 
     let {
       title,
-      description,
-      operationalCategory
+      description
     } = request.body;
 
     const operationalCategories = await prisma.operationalCategories.create({
       data: {
         title,
-        description,
-        operationalCategory
+        description
       }
-    })
+    }).catch(error=>response.status.json(error));
 
     response.json(operationalCategories);
 

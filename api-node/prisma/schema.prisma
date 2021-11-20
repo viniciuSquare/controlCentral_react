@@ -51,7 +51,7 @@ model Tasks {
   description String
   category    ActionCategories @relation(fields: [actionCategoriesId], references: [id])
   location    Locations?       @relation(fields: [locationsId], references: [id])
-  requester   User?            @relation(fields: [userId], references: [id])
+  requester   Users?           @relation(fields: [userId], references: [id])
   status      ActionStatus     @relation(fields: [actionStatusId], references: [id])
   priority    String
   createdAt   DateTime
@@ -87,11 +87,11 @@ model Locations {
 
   UserDevices             UserDevices[]
   Tasks                   Tasks[]
-  User                    User[]
+  User                    Users[]
   operationalCategoriesId Int?
 }
 
-model User {
+model Users {
   id         Int       @id @default(autoincrement())
   name       String
   username   String    @unique
@@ -105,7 +105,7 @@ model User {
 model UserDevices {
   id                Int                 @id @default(autoincrement())
   location          Locations           @relation(fields: [locationId], references: [id])
-  user              User                @relation(fields: [userId], references: [id])
+  user              Users               @relation(fields: [userId], references: [id])
   device            Devices             @relation(fields: [devicesId], references: [id])
   locationId        Int
   devicesId         Int

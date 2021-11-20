@@ -78,7 +78,7 @@ export function Devices() {
           <div className="left-side-menu">
             <button onClick={toggleNewCategoryModalVisibility} id="toggle-new-device-modal" >
               <strong>Nova categoria</strong>
-              <BsPlus/>
+              <BsPlus size="24"/>
             </button>
             {
               isNewCategoryModalVisible &&
@@ -113,7 +113,7 @@ export function Devices() {
       <div className="container-pane">
         <div className="head">
           <div className="title-n-tools">
-            <h1 className="page-title">Dispositivos</h1>
+            <h1 className="page-title title">Dispositivos</h1>
             <div className="tools">
               <input type="text" />
               <hr className="vertical" />
@@ -125,7 +125,7 @@ export function Devices() {
               && <NewDeviceModal devCategory={devCategory} closer={toggleVisibility}/> 
           }
           
-          </div>
+        </div>
         <div className="pane-content">
           <DeviceList devices={devices}/>
         </div>

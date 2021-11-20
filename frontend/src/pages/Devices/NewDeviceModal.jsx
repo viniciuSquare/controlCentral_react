@@ -57,20 +57,49 @@ export const NewDeviceModal = ({devCategory, closer}) => {
         <div className="modal-head">
           <h1 className="modal-title" > Novo dispositivo</h1>
           <h2 id="dev-code">#{devCode}</h2>
-
         </div>
         <form onChange={handleDevInputChange} >
+          <h3 className="field-group-name title" >
+            Dados do dispositivo
+          </h3>
           <div className="wrapper">
             <label htmlFor="alias">Título</label>
             <input 
               placeholder="dev-title" type="text" name="alias" /> 
           </div>
-          <div className="wrapper">
-            <label htmlFor="specification">Modelo</label>
-            <input 
-              placeholder="dev-model" type="text" name="specification" /> 
+          <div className="input-group">
+            <div className="wrapper">
+              <label htmlFor="specification">Modelo</label>
+              <input 
+                placeholder="dev-model" type="text" name="specification" /> 
+            </div>
+            <div className="wrapper">
+              <label htmlFor="cpu">Processador</label>
+              <input type="text" name="cpu" />
+            </div>
+
           </div>
-          <div className="net-props input-group">
+          <div className="input-group">
+            <div className="wrapper">
+              <label htmlFor="dev-category">Category</label>
+              <select type="text" name="dev-category" >
+                {/* TODO */}
+                <option value="select" disabled >Selecione a categoria</option>
+                { devCategory.map((category) => {
+                  return(
+                    <option value={category.id}> {category.title}</option>
+                  )
+
+                })}
+
+              </select>
+            </div>
+            
+          </div>
+          <h3 className="field-group-name title" >
+            Dados de rede
+          </h3>
+          <div className="net-props input-group net-field">
             <div className="wrapper">
               <label htmlFor="macCable">MAC ethernet</label>
               <input 
@@ -89,34 +118,11 @@ export const NewDeviceModal = ({devCategory, closer}) => {
                 placeholder="dev-mac-Wireless" type="text" name="macWireless" /> 
             </div>
             <div className="wrapper">
-              <label htmlFor="ipWireless">IP cabo</label>
+              <label htmlFor="ipWireless">IP Wi-Fi</label>
               <input 
                 placeholder="dev-ip-Wireless" type="text" name="ipWireless" /> 
             </div>
-          </div>
-          
-          <div className="input-group">
-            {/* <div className="wrapper">
-              <label htmlFor="dev-local">Local</label>
-              <input 
-                placeholder="dev-local" type="text" name="local" /> 
-            </div> */}
-            <div className="wrapper">
-              <label htmlFor="dev-category">Category</label>
-              <select type="text" name="dev-category" >
-                {/* TODO */}
-                <option value="select" disabled >Selecione a categoria</option>
-                { devCategory.map((category) => {
-                  return(
-                    <option value={category.id}> {category.title}</option>
-                  )
-
-                })}
-
-              </select>
-            </div>
-          </div>
-          
+          </div>          
           <div className="wrapper">
             <label htmlFor="dev-specification">Especificação</label>
             <textarea 
