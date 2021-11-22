@@ -2,24 +2,28 @@ import styled from "styled-components"
 
 import { NavLink } from "react-router-dom"
 
-export const SidebarMenuStyled = styled(NavLink)`
-  display: flex;
+export const SidebarMenuStyled = styled.div`
 
-  width: 100%;
-  height: 3rem;
-  margin: 4px 0;
+  .menu-item {
+    display: flex;
+  
+    width: 100%;
+    height: 3rem;
+    margin: 4px 0;
+  
+    align-items: center;
+  
+    border-radius: 3px;
+    color: #13138096;
+    background-color: #D8E2FB;
+    letter-spacing: 0.4px;
+  
+    line-height: 0;
+  
+    svg {
+      margin: 0 1rem 0 1.25rem;
+    }
 
-  align-items: center;
-
-  border-radius: 3px;
-  color: #13138096;
-  background-color: #D8E2FB;
-  letter-spacing: 0.4px;
-
-  line-height: 0;
-
-  svg {
-    margin: 0 1rem 0 1.25rem;
   }
 
   &.active {
@@ -36,7 +40,7 @@ export const SidebarMenuStyled = styled(NavLink)`
       background: #2a51dc91;
       border-radius: 3px;
     }
-
      
   }
+  
 `

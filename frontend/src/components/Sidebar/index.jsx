@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 import tayayaLogo from '../../assets/tayaya.png'
 import { SidebarStyled } from  './styled'
 
@@ -19,7 +17,6 @@ import {
   BsPeople,
   BsSignpost
 } from 'react-icons/bs'
-
 
 export function Sidebar() {
   const iconSize = 28;

@@ -1,4 +1,3 @@
-import { ContentPane } from '../ContentPane'
 import { ModalStyled } from './styled'
 
 export default function Modal({children, toggleVisibility, isForm}) {

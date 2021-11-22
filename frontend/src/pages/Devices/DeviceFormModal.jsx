@@ -1,19 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import api from '../../api/api';
 
 import Modal from '../../components/Modal';
 
 import { StyledNewDeviceForm } from './styled';
 
-export const NewDeviceModal = ({devCategory, closer}) => {
+export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
   // HANDLE FORM
   const [formInputs, setFormInputs] = useState({});
   const [devCode, setDevCode] = useState("")
+  
+  const [device, setDevice] = useState({});
+  useEffect(()=>{
+    if(!deviceToEdit) {
+      setDevice({});
+    } else {
+      setDevice(device);
+    }
+  },[])
+
   const handleDevInputChange = event => {
     let fieldName = event.target.name
     let fieldValue = event.target.value
-
+    
     setFormInputs({ ...formInputs, [fieldName] : fieldValue })
-
+    
     console.log(formInputs)
     // TODO - DEV CODE CREATION
     let createDeviceCode = [
@@ -21,22 +32,36 @@ export const NewDeviceModal = ({devCategory, closer}) => {
       formInputs["dev-model"],
       formInputs["dev-category"]
     ]
-
+    
     let code = createDeviceCode.map( creteria => {
       if(creteria != undefined)
-        return creteria
+      return creteria
       return
     } )
     code = code.join("-")
     setDevCode(code)
     // ======
     
-
+    
   }
   // FORM SUBMITTION
-  function submitDevice(event) {
+  async function submitDevice(event) {
+    event.preventDefault();
 
-  }
+    const formData = new FormData(event.target)
+    let data = Object.fromEntries(formData)
+    data.category = data["dev-category"];
+    delete data["dev-category"];
+    
+    // console.log(data);
+
+    let {data:creationResult, status} = await api.post("dispositivos/", data);
+    if(status == 200 || status == 201) {
+      closer();
+    }
+    
+    console.log(creationResult);
+  }  
 
   // TODO - RESET FORM FIELDS
   
@@ -58,7 +83,7 @@ export const NewDeviceModal = ({devCategory, closer}) => {
           <h1 className="modal-title" > Novo dispositivo</h1>
           <h2 id="dev-code">#{devCode}</h2>
         </div>
-        <form onChange={handleDevInputChange} >
+        <form onChange={handleDevInputChange} onSubmit={submitDevice}>
           <h3 className="field-group-name title" >
             Dados do dispositivo
           </h3>
@@ -71,7 +96,7 @@ export const NewDeviceModal = ({devCategory, closer}) => {
             <div className="wrapper">
               <label htmlFor="specification">Modelo</label>
               <input 
-                placeholder="dev-model" type="text" name="specification" /> 
+                placeholder="dev-model" type="text" name="serviceTag" /> 
             </div>
             <div className="wrapper">
               <label htmlFor="cpu">Processador</label>
@@ -85,7 +110,7 @@ export const NewDeviceModal = ({devCategory, closer}) => {
               <select type="text" name="dev-category" >
                 {/* TODO */}
                 <option value="select" disabled >Selecione a categoria</option>
-                { devCategory.map((category) => {
+                { devicesCategories.map((category) => {
                   return(
                     <option value={category.id}> {category.title}</option>
                   )
@@ -124,21 +149,18 @@ export const NewDeviceModal = ({devCategory, closer}) => {
             </div>
           </div>          
           <div className="wrapper">
-            <label htmlFor="dev-specification">Especificação</label>
+            <label htmlFor="specification">Especificação</label>
             <textarea 
-              placeholder="dev-specification" type="text" name="dev-specification" /> 
+              placeholder="dev-specification" type="text" name="specification" /> 
           </div>
           
           
           {/* <input type="text" name="dev-mac-wireless" /> */}
           <button 
-            onClick={submitDevice}
             id="submit-dev" 
           >Submit new device</button>
           
         </form>
-
-
       </StyledNewDeviceForm>
     </Modal>
   )

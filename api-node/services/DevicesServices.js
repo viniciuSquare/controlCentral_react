@@ -24,7 +24,7 @@ class CreateDeviceService  {
       data: {
         id, 
         alias, 
-        category, 
+        deviceCategoryId: parseInt(category), 
         specification, 
         macCable, 
         macWireless, 

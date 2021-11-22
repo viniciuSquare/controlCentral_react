@@ -17,13 +17,15 @@ export const SidebarStyled = styled.aside`
     align-items: center;
     gap: 1rem ;
     
-    height: 60px;
-    width: 80%;
-
-    margin: 0 auto;
+    margin: 0.5rem auto;
     margin-bottom: 1rem;
 
+    height: 50px;
+    width: 80%;
+
     border-bottom: 1px solid #dfdfdf85;
+    background-color: #332fff;
+    border-radius: 12px;
 
     color: #fff;
 

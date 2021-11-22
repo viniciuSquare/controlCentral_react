@@ -2,9 +2,24 @@ import styled from "styled-components";
 
 export const StyledDevicesPage = styled.div`
   display: grid;
-  grid-template-columns: 20% auto 10%;
+  grid-template-columns: 10% auto 15%;
   
   width: 100%;
+
+  /* SYSTEM COMPONENTS DEFAULTS */
+  .warning {
+    font-size: 1.2rem
+  }
+  /* GENERAL SETTINGS */
+  .align-horizontal {
+    display: flex;
+    align-items: center;
+
+    &.spaced {
+      justify-content: space-between;
+
+    }
+  }
 
   .left-side {
     padding-top: 1rem;
@@ -63,27 +78,35 @@ export const StyledDevicesPage = styled.div`
       }
     }
   }
+
   .field-group-name {
     opacity: 0.6;
     margin-top: 1rem;
   }
+
+  .container-pane {
+    display: grid;
+    grid-template-rows: 4rem auto 45%;
+    
+    #device-detail {
+      background-color: #E0EAFC;
+
+      padding: 1rem;
+      border-top: 1px solid gray;
+
+      .select-to-see {
+
+      }
+      
+    }
+  }
+
   tr, thead {
     grid-template-columns: 2fr 2fr 2fr 1.5fr 1.5fr;
   }
 
   .right-side {
     background-color: lightcoral;
-  }
-  
-  /* GENERAL SETTINGS */
-  .align-horizontal {
-    display: flex;
-    align-items: center;
-
-    &.spaced {
-      justify-content: space-between;
-
-    }
   }
 
   /* MAIN CONTENT */

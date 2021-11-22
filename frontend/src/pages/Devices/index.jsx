@@ -1,30 +1,57 @@
 import { useEffect, useState } from 'react'
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import { StyledDevicesPage } from "./styled";
-import { BsLink45Deg, BsNodePlus, BsPersonLinesFill, BsPlus } from 'react-icons/bs';
+import { BsLink45Deg, BsNodePlus, BsPencilSquare, BsPersonLinesFill, BsPlus, BsThreeDots } from 'react-icons/bs';
 
 import { useData } from '../../hooks/useData'
 import api from '../../api/api';
 
-import { NewDeviceModal } from './NewDeviceModal';
+import { NewDeviceModal } from './DeviceFormModal';
+import Modal from '../../components/Modal';
+import { useSession } from '../../hooks/useSession';
 
 export function Devices() {
-
+  // DATA WILL COME FROM BACKEND
   const [devices , setDevices] = useState({});
-
-  const { 
-      setPageCategories, 
-      pageCategories } = useData();
+  // const [devicesCategories , setDevicesCategories] = useState({});
+  const {navCategories, setNavCategories} = useSession();
+  
+  // SET IF DATA CAME
+  const [ isContentLoaded, setIsContentLoaded ] = useState();
+  
+  const [ selectedDevice, setSelectedDevice ] = useState({});
 
   const [ isModalVisible, setIsModalVisible ] = useState();
   const toggleVisibility = () => setIsModalVisible(!isModalVisible)
 
   const [ isNewCategoryModalVisible, setIsNewCategoryModalVisible ] = useState();
   const toggleNewCategoryModalVisibility = () => setIsNewCategoryModalVisible(!isNewCategoryModalVisible);
+  
+  let pathData = useLocation()
 
-  const [formValues, setFormValues] = useState({});
 
+  // FEED DATA FOR TABLES FROM BACKEND
+  useEffect(async ()=>{
+    
+    console.log(pathData, "PATH DATA")
+  
+    let {data: devicesList} = await api.get("/dispositivos");
+    setDevices(devicesList);
+
+    let {data: navCategories} = await api.get("/dispositivos/categorias");
+    setNavCategories(navCategories);
+
+    // return () => setDevicesCategories({})
+  }, [])
+
+  useEffect(()=>{
+    if(!isContentLoaded)
+      setIsContentLoaded(true);
+        
+  }, [selectedDevice, devices])
+
+  // LEFT SIDE FORM
   async function submitNewDeviceCategory(event) {
     event.preventDefault();
 
@@ -37,20 +64,6 @@ export function Devices() {
     console.log(creationResult);
   }
 
-  useEffect(async ()=>{
-    let {data: devicesList} = await api.get("/dispositivos");
-    setDevices(devicesList);
-
-    let {data: deviceCategories} = await api.get("/dispositivos/categorias");
-    setPageCategories(deviceCategories);
-
-    return () => setPageCategories({})
-  }, [])
-
-  let devCategory = pageCategories;
-  let category = useParams();
-  console.log(category)
-
   return (
     <StyledDevicesPage>
       <div className="left-side">
@@ -58,13 +71,12 @@ export function Devices() {
           <h3 className="title">
             Categorias
           </h3>
-          {/* <button><BsPlus size="28" color="gray"/></button> */}
         </div>
         <div className="l-content">
           <ul className="pageCategoriesList">
             {
-              devCategory.length > 0 
-                ? devCategory.map( category => {
+              navCategories.length > 0 
+                ? navCategories.map( category => {
                   return (
                     <li key={category.id} className="pageCategoryLink">
                       <NavLink to={`/dispositivos/${category.title}`} >{category.title}</NavLink>
@@ -84,8 +96,7 @@ export function Devices() {
               isNewCategoryModalVisible &&
                 <form onSubmit={submitNewDeviceCategory} className="new-category-modal  " >
                   <div>
-                    <input 
-                      // onChange={handleInputChange} 
+                    <input  
                       id="new-category-title" 
                       type="text" 
                       placeholder="Título da categoria..." 
@@ -93,8 +104,7 @@ export function Devices() {
                     />
                     <div className="input-group align-horizontal spaced">
                       <label htmlFor="isNetDev">Dispositivo de rede?</label>
-                      <input 
-                        // onChange={handleInputChange} 
+                      <input  
                         type="checkbox" 
                         name="isNetDev"
                       />
@@ -104,12 +114,10 @@ export function Devices() {
                     <BsNodePlus size="24"/>
                   </button>
                 </form>
-
             }
           </div>
         </div>
       </div>
-
       <div className="container-pane">
         <div className="head">
           <div className="title-n-tools">
@@ -120,16 +128,15 @@ export function Devices() {
               <button onClick={toggleVisibility} > Add device</button>
             </div>
           </div>
-          {
-            isModalVisible //NEW DEVICE MODAL
-              && <NewDeviceModal devCategory={devCategory} closer={toggleVisibility}/> 
+          {isModalVisible //NEW DEVICE MODAL
+              && <NewDeviceModal devicesCategories={navCategories}closer={toggleVisibility}/> 
           }
           
         </div>
         <div className="pane-content">
-          <DeviceList devices={devices}/>
+          <DeviceList devices={devices} handleItemSelection={setSelectedDevice}/>
         </div>
-
+        <DeviceDetails device={selectedDevice} />
       </div>
       <div className="right-side">
 
@@ -138,47 +145,102 @@ export function Devices() {
   )
 }
 
-const DeviceList= ({devices})=> {
+const DeviceList= ({devices, handleItemSelection})=> {
+
+  function handleDataSelection(event){
+    const {target} = event;
+
+  }
+
   return(
-      <table>
-        <thead>
-          <th>Alias</th>
-          <th>Usuário</th>
-          <th>Setor</th>
-          <th>IP</th>
-          <th>Ferramentas</th>
-        </thead>
-        <tbody>
-          {
-            devices.length > 0 
-              ? (
-                  devices.map( (device) => {
-                    return (
-                      <tr>
-                        <td>{device.alias}</td>
-                        <td>{device.category}</td>
-                        <td>{device.ip}</td>
-                        <td>{device.setor}</td>
-                        <td>
-                          <div className="device-tools" >
-                            <button><BsLink45Deg size="24" /></button>
-                            <button><BsPersonLinesFill size="24" /></button>
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  } 
-                )
-                
-              ) : null
-          }
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+    <table>
+      <thead>
+        <th>Alias</th>
+        <th>Usuário</th>
+        <th>Setor</th>
+        <th>IP</th>
+        <th>Ferramentas</th>
+      </thead>
+      <tbody>
+        {
+          devices.length > 0 
+            ? (
+                devices.map( device => {
+                  return (
+                    <tr onClick={handleDataSelection} >
+                      <td>{device.alias}</td>
+                      <td>{device.category.title}</td>
+                      <td>{device.ip}</td>
+                      <td>{device.setor}</td>
+                      <td>
+                        <div className="device-tools" >
+                          <button><BsLink45Deg size="24" /></button>
+                          <button onClick={ ()=> {
+                              <Modal>
+
+                              </Modal>
+                            } 
+
+                          } ><BsPencilSquare size="24" /></button>
+                          <button onClick={()=>handleItemSelection(device)} ><BsThreeDots size="24" /></button>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                } 
+              )
+              
+            ) : null
+        }
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
   )
+}
+
+const DeviceDetails = ({device}) => {
+  console.log(device)
+  return(
+    <div id="device-detail">
+      { device.id
+        ? (
+          <>
+            <h1>Detalhes da selação</h1>
+            <h3>{device.alias}</h3>
+            <table>
+              <tbody>
+              <tr>
+                <h2>Usuário</h2>
+                <p>Vinícius Quadrado</p>
+              </tr>
+              <tr>
+                <h2>IP</h2>
+                <p>{device.ipCable||device.ipWireless||"Não definido"}</p>
+              </tr>
+              <tr>
+                <h2>Categoria</h2>
+                <p>{device.category?.title||"Não definido"}</p>
+              </tr>
+              <tr>
+                <h2>Categoria</h2>
+                <p>{device.category?.title||"Não definido"}</p>
+              </tr>
+      
+              </tbody>
+            </table>
+          </>
+        )
+        : (
+          <h1 className="select-to-see warning">Selecione item para ver detalhes</h1>
+        )
+    }
+      
+    </div>
+  )
+
 }
