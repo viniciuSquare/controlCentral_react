@@ -2,13 +2,6 @@
   font-family: 'Roboto', sans-serif;
 
   text-decoration: none;
-  --main-backgroud: #F5F6F8;
-  /* --main-backgroud: rgba(171, 180, 211, 0.153); */
-  /* --pane-background: #ffffff92; */
-  --pane-background: #fff;
-  --card-background: rgba(195, 209, 255, 0.324);
-
-  --title: #203C6B;
 
   margin: 0;
   padding: 0;

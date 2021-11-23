@@ -1,11 +1,9 @@
-const { 
-  GetLocationsService, 
-  CreateLocationService
-} = require('../services/LocationsServices');
+const { LocationsServices } = require('../services/LocationsServices');
 
 const locationsRouter = require('express').Router();
 
-locationsRouter.post('/', new CreateLocationService().handle)
-locationsRouter.get('/',  new GetLocationsService().handle)
+locationsRouter.post('/', new LocationsServices().createLocation);
+locationsRouter.get('/',  new LocationsServices().getLocations);
+locationsRouter.put('/',  new LocationsServices().editLocation);
 
 module.exports = locationsRouter

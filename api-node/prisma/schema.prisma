@@ -85,12 +85,12 @@ model Locations {
   id                  Int                    @id @default(autoincrement())
   title               String
   description         String?
-  operationalCategory OperationalCategories? @relation(fields: [operationalCategoriesId], references: [id])
+  operationalCategory OperationalCategories? @relation(fields: [operationalCategoryId], references: [id])
 
   UserDevices             UserDevices[]
   Tasks                   Tasks[]
   User                    Users[]
-  operationalCategoriesId Int?
+  operationalCategoryId Int?
 }
 
 model Users {

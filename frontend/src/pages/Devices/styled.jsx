@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledDevicesPage = styled.div`
   display: grid;
-  grid-template-columns: 10% auto 15%;
+  grid-template-columns: 10% auto 10%;
   
   width: 100%;
 
@@ -33,18 +33,6 @@ export const StyledDevicesPage = styled.div`
       display: flex;
       flex-direction: column;
       width: 95%;
-      
-      .pageCategoriesList {
-        margin: 1rem 0;
-  
-        li {
-          display: flex;
-          flex: 1;
-          justify-content: space-between;
-  
-          height: 3rem;
-        }
-      }
 
       .left-side-menu{
         padding-right: 0.5rem;
@@ -86,27 +74,94 @@ export const StyledDevicesPage = styled.div`
 
   .container-pane {
     display: grid;
-    grid-template-rows: 4rem auto 45%;
+    grid-template-rows: 4rem auto 2rem 30%;
+
+    .pane-content {
+      margin-bottom: 1.5rem;
+    }
     
-    #device-detail {
+    #devices-listage {
+      background-color: #E0EAFC;
+      height: 100%;
+
+      border-radius: 12px;
+   
+      tr, thead {
+        grid-template-columns: 2fr 2fr 2fr 1.5fr 1.5fr;
+      }
+
+    }
+
+    /* .field-title {  DEFINED AT GLOBAL SCOPE
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+      opacity: 0.5;
+    } */
+
+    .device-details-container {
+      padding: 1rem;
+
+      border-radius: 12px;
       background-color: #E0EAFC;
 
-      padding: 1rem;
-      border-top: 1px solid gray;
+      #device-details{
+        display: grid;
+        grid-template-columns: 20% auto 3rem;
 
-      .select-to-see {
+        /* background-color: red; */
+        height: 80%;
+
+        table, td, th {
+          border: none !important;
+        }
+        
+        .head {
+          /* background-color: blue; */
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+
+          p {
+            margin-bottom: 0.6rem;
+            opacity: 0.7;
+          }
+          .tools {
+            margin-top: auto;
+            /* padding-left: 1rem; */
+            width: 80%;
+            display: flex;
+
+            gap: 0.6rem;
+
+            svg{
+              opacity: 0.6;
+            }
+            svg:hover {
+              opacity: 1;
+            }
+          }
+        }
 
       }
+
+      table {
+        display: flex;
+        tr {
+          grid-template-columns: 1fr 1fr;
+          td {
+            padding-right: 0.5rem;
+            font-size: 1rem;
+          }
+          
+        }
+      }
+
       
     }
   }
 
-  tr, thead {
-    grid-template-columns: 2fr 2fr 2fr 1.5fr 1.5fr;
-  }
-
   .right-side {
-    background-color: lightcoral;
+    /* background-color: lightcoral; */
   }
 
   /* MAIN CONTENT */

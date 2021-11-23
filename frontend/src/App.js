@@ -17,35 +17,38 @@ import { AppStyled } from './styled'
 import { DataContextProvider } from './contexts/DataContext';
 
 import { useSession } from './hooks/useSession';
+import { SessionContextProvider } from './contexts/SessionContext';
 
 export default function App() {
   const {isSidebarOpen} = useSession();
   return (
-    <DataContextProvider>
-        {/* CONTEXTS */}
-        <AppStyled className={classNames(isSidebarOpen ? "sidebar-open" : "sidebar-closed")}>
-          <BrowserRouter>
-            <Sidebar id="sidebar-menu"/>            
-            <div className="content">
-              <Header/> 
-              <Switch> 
-                <Route path="/" exact component={Home} />
-                <Route path="/tarefas" component={Tasks} />
-                <Route path="/tarefas/:taskId" component={Tasks} />
+    <SessionContextProvider>
+      <DataContextProvider>
+          {/* CONTEXTS */}
+          <AppStyled className={classNames(isSidebarOpen ? "sidebar-open" : "sidebar-closed")}>
+            <BrowserRouter>
+              <Sidebar id="sidebar-menu"/>            
+              <div className="content">
+                <Header/> 
+                <Switch> 
+                  <Route path="/" exact component={Home} />
+                  <Route path="/tarefas" component={Tasks} />
+                  <Route path="/tarefas/:taskId" component={Tasks} />
 
-                <Route path="/funcionarios" component={Employees} />
+                  <Route path="/funcionarios" component={Employees} />
 
-                <Route path="/dispositivos" component={Devices} />
-                <Route path="/dispositivos/:category" exact component={Devices} />
+                  <Route path="/dispositivos" component={Devices} />
+                  <Route path="/dispositivos/:category" exact component={Devices} />
 
-                <Route path="/locais" component={LocationsPage} />
-                <Route path="/base-conhecimento" component={Knowledge} />
-              </Switch>
-            </div>
-          </BrowserRouter>
-        </AppStyled>
-        {/* ------ */}
-    </DataContextProvider>
+                  <Route path="/locais" component={LocationsPage} />
+                  <Route path="/base-conhecimento" component={Knowledge} />
+                </Switch>
+              </div>
+            </BrowserRouter>
+          </AppStyled>
+          {/* ------ */}
+      </DataContextProvider>
+    </SessionContextProvider>
     
   );
 }

@@ -1,7 +1,5 @@
 import styled from "styled-components"
 
-import { NavLink } from "react-router-dom"
-
 export const SidebarMenuStyled = styled.div`
 
   .menu-item {
@@ -44,3 +42,22 @@ export const SidebarMenuStyled = styled.div`
   }
   
 `
+
+export const CategoriesNavStyled = styled.ul`
+  &#pageCategoriesList {
+    margin-left: 2rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    
+    li {
+      padding: 0 1.3rem;
+
+      display: flex;
+      flex: 1;
+      justify-content: space-between;
+      align-items: center;
+
+      height: 2.3rem;
+    }
+  }
+`
+  

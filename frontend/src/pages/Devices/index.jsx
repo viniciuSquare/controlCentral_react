@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { StyledDevicesPage } from "./styled";
-import { BsLink45Deg, BsNodePlus, BsPencilSquare, BsPersonLinesFill, BsPlus, BsThreeDots } from 'react-icons/bs';
+import { BsLink45Deg, BsNodePlus, BsPencilSquare, BsPlus, BsThreeDots, BsTrash, BsTrash2Fill } from 'react-icons/bs';
 
-import { useData } from '../../hooks/useData'
 import api from '../../api/api';
 
 import { NewDeviceModal } from './DeviceFormModal';
@@ -42,7 +41,7 @@ export function Devices() {
     let {data: navCategories} = await api.get("/dispositivos/categorias");
     setNavCategories(navCategories);
 
-    // return () => setDevicesCategories({})
+    return () => setNavCategories({})
   }, [])
 
   useEffect(()=>{
@@ -67,27 +66,9 @@ export function Devices() {
   return (
     <StyledDevicesPage>
       <div className="left-side">
-        <div className="container-head">
-          <h3 className="title">
-            Categorias
-          </h3>
-        </div>
+        {/* <div className="container-head"></div> */}
         <div className="l-content">
-          <ul className="pageCategoriesList">
-            {
-              navCategories.length > 0 
-                ? navCategories.map( category => {
-                  return (
-                    <li key={category.id} className="pageCategoryLink">
-                      <NavLink to={`/dispositivos/${category.title}`} >{category.title}</NavLink>
-                      <BsNodePlus size="24"/> 
-                    </li>
-                  )
-                }) 
-                : <li>Nada a ser exibido</li>
-            }
-          </ul>
-          <div className="left-side-menu">
+          {/* <div className="left-side-menu">
             <button onClick={toggleNewCategoryModalVisibility} id="toggle-new-device-modal" >
               <strong>Nova categoria</strong>
               <BsPlus size="24"/>
@@ -115,7 +96,7 @@ export function Devices() {
                   </button>
                 </form>
             }
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="container-pane">
@@ -128,7 +109,7 @@ export function Devices() {
               <button onClick={toggleVisibility} > Add device</button>
             </div>
           </div>
-          {isModalVisible //NEW DEVICE MODAL
+          { isModalVisible //NEW DEVICE MODAL
               && <NewDeviceModal devicesCategories={navCategories}closer={toggleVisibility}/> 
           }
           
@@ -153,7 +134,7 @@ const DeviceList= ({devices, handleItemSelection})=> {
   }
 
   return(
-    <table>
+    <table id="devices-listage"  className="with-td-division">
       <thead>
         <th>Alias</th>
         <th>Usuário</th>
@@ -163,41 +144,34 @@ const DeviceList= ({devices, handleItemSelection})=> {
       </thead>
       <tbody>
         {
-          devices.length > 0 
-            ? (
-                devices.map( device => {
-                  return (
-                    <tr onClick={handleDataSelection} >
-                      <td>{device.alias}</td>
-                      <td>{device.category.title}</td>
-                      <td>{device.ip}</td>
-                      <td>{device.setor}</td>
-                      <td>
-                        <div className="device-tools" >
-                          <button><BsLink45Deg size="24" /></button>
-                          <button onClick={ ()=> {
-                              <Modal>
+          devices.length > 0 &&
+            (
+              devices.map( device => {
+                return (
+                  <tr key={device.id} onClick={handleDataSelection} >
+                    <td  >{device.alias}</td>
+                    <td  >{device.category.title}</td>
+                    <td  >{device.ip}</td>
+                    <td  >{device.setor}</td>
+                    <td  >
+                      <div className="device-tools" >
+                        <button><BsLink45Deg size="24" /></button>
+                        <button onClick={ ()=> {
+                            <Modal>
 
-                              </Modal>
-                            } 
+                            </Modal>
+                          } 
 
-                          } ><BsPencilSquare size="24" /></button>
-                          <button onClick={()=>handleItemSelection(device)} ><BsThreeDots size="24" /></button>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                } 
-              )
-              
-            ) : null
+                        } ><BsPencilSquare size="24" /></button>
+                        <button onClick={()=>handleItemSelection(device)} ><BsThreeDots size="24" /></button>
+                      </div>
+                    </td>
+                  </tr>
+                )
+              } 
+            )
+          )
         }
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
       </tbody>
     </table>
   )
@@ -206,41 +180,96 @@ const DeviceList= ({devices, handleItemSelection})=> {
 const DeviceDetails = ({device}) => {
   console.log(device)
   return(
-    <div id="device-detail">
-      { device.id
-        ? (
-          <>
-            <h1>Detalhes da selação</h1>
-            <h3>{device.alias}</h3>
-            <table>
-              <tbody>
-              <tr>
-                <h2>Usuário</h2>
-                <p>Vinícius Quadrado</p>
-              </tr>
-              <tr>
-                <h2>IP</h2>
-                <p>{device.ipCable||device.ipWireless||"Não definido"}</p>
-              </tr>
-              <tr>
-                <h2>Categoria</h2>
-                <p>{device.category?.title||"Não definido"}</p>
-              </tr>
-              <tr>
-                <h2>Categoria</h2>
-                <p>{device.category?.title||"Não definido"}</p>
-              </tr>
-      
-              </tbody>
-            </table>
-          </>
-        )
-        : (
-          <h1 className="select-to-see warning">Selecione item para ver detalhes</h1>
-        )
-    }
-      
-    </div>
+    <>
+      <h1 className="field-title">Detalhes da selação</h1>
+      <div className="device-details-container" >
+        { device.id
+          ? (
+            <>
+              <div id="device-details">
+                <div className="head">
+                  <div className="title">
+                    <p>Nome</p>
+                    <h3>{device.alias}</h3>
+                  </div>
+                  
+                  <div className="tools">
+                    <button>
+                      <BsPencilSquare size="32" />
+                    </button>
+                    <button>
+                      <BsTrash2Fill size="32" />
+                    </button>
+                  </div>
+
+                </div>
+                <table>
+                  <tbody>
+                    <tr>
+                      <td className="align-left" >
+                        <h4>Usuário</h4>
+                      </td>
+                      <td className="align-left" >
+                        <p>Vinícius Quadrado</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="align-left" >
+                        <h4>Endereço IP</h4>
+                      </td>
+                      <td className="align-left" >
+                        <p>{device.ipCable||device.ipWireless||"Não definido"}</p>
+                        
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="align-left" >
+                        <h4>Tipo dispositivo</h4>
+                      </td>
+                      <td className="align-left" >
+                        <p>{device.category?.title||"Não definido"}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="align-left" >
+                        <h4>Local/Setor</h4>
+                      </td>
+                      <td className="align-left" >
+                        <p>Sala de TI</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                {/* <tbody>
+                  <tr>
+                      <td className="align-left" >
+                        Estado
+                      </td>
+                      <td className="align-left" >
+                        <p>{device.state||"Não definido"}</p>
+                      </td>
+                    </tr>
+                    
+                    <tr>
+                      <td className="align-left" >
+                        <h2>Categoria Operacional</h2>
+                      </td>
+                      <td className="align-left" >
+                        <p>{device.operationalCategory?.title||"Não definido"}</p>
+                      </td>
+                    </tr>
+                  </tbody> */}
+                
+              </div>
+            </>
+          )
+          : (
+            <h1 className="field-title warning">Selecione item para ver detalhes</h1>
+          )
+      }
+        
+      </div>
+    </>
   )
 
 }

@@ -4,17 +4,19 @@ const {
   CreateDeviceCategoryController, 
   GetDeviceCategories, 
   GetDevice,
-  EditDevice
+  EditDevice,
+  DeviceService
 } = require('../services/DevicesServices');
 
 const devicesRouter = require('express').Router();
 
-devicesRouter.post('/', new CreateDeviceService().handle);
-devicesRouter.get('/',  new GetDevicesService().handle);
-devicesRouter.put('/',  new EditDevice().handle);
-devicesRouter.post("/categoria", new CreateDeviceCategoryController().handle);
-devicesRouter.get("/categorias", new GetDeviceCategories().handle);
-devicesRouter.get("/categoria", new GetDevice().handle);
+devicesRouter.post('/', new DeviceService().createDevice);
+devicesRouter.get('/',  new DeviceService().getDevices);
+devicesRouter.put('/',  new DeviceService().editDevice);
+devicesRouter.get("/", new DeviceService().getDevice);
+
+devicesRouter.post("/categoria", new DeviceService().createDeviceCategory);
+devicesRouter.get("/categorias", new DeviceService().getDevicesCategories);
 
 
 module.exports = devicesRouter;

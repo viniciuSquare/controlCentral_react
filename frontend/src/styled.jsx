@@ -6,12 +6,42 @@ export const AppStyled = styled.div`
   
   display: grid;
 
+  --main-backgroud: #F5F6F8;
+  /* --main-backgroud: rgba(171, 180, 211, 0.153); */
+  /* --pane-background: #ffffff92; */
+  --pane-background: #fff;
+  --card-background: rgba(195, 209, 255, 0.324);
+
+  --title: #203C6B;
+
   &.sidebar-open {
     grid-template-columns: minmax(10rem, 220px) auto;
   }
   
   &.sidebar-closed {
     grid-template-columns: auto 1fr;
+    #pageCategoriesList {
+      display: none;
+    }
+  }
+
+  .field-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    opacity: 0.5;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+
+  .normal-line-height {
+    line-height: 1rem !important;
+  }
+
+  button {
+    cursor: pointer;
   }
   
   
@@ -40,16 +70,34 @@ export const AppStyled = styled.div`
 
       color: rgba(19, 19, 84, 0.6);
 
+      tr {
+        .align-left {
+          text-align: left;
+          padding-left: 0.8rem;
+        }
+        .tools-td {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          gap: 1rem;
+        }
+      }
+
       thead, tr {
         display: grid;
         align-items: center;
-        
-        height: 2rem;
       
         border-radius: 8px;
+        &.with-td-division{
+          
+        }
     
-        
         td, th {
+          height: 2.2rem;
+          line-height: 2rem;
+          text-align: center;
+
           width: 100%;
           & + td, & + th{
             border-left: 1px solid rgba(19, 19, 84, 0.301);

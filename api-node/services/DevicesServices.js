@@ -1,7 +1,99 @@
 const {PrismaClient} = require('@prisma/client')
 
-class CreateDeviceService  {
-  async handle(request, response) {
+class DeviceService {
+  async editDevice(request, response) {
+    let {
+      id, 
+      alias, 
+      category, 
+      specification, 
+      macCable, 
+      macWireless, 
+      ipCable, 
+      ipWireless, 
+      state,
+      ramal,
+      operationalCategoriesId,
+      location
+    } = request.body;
+
+    const prisma = new PrismaClient();
+    const device = await prisma.devices.update({
+      where: {
+        id
+      },
+      data: {
+        alias, 
+        category, 
+        specification, 
+        macCable, 
+        macWireless, 
+        ipCable, 
+        ipWireless, 
+        state,
+        ramal,
+        operationalCategoriesId
+      }
+    })
+    if(location) {
+      const locationData = await prisma.locations.findUnique({
+        where: {
+          id: location.id
+        }
+      })
+    }
+    response.json(device);
+  }
+  
+  async getDevicesCategories(request, response) {
+    const prisma = new PrismaClient();
+
+    const allDevicesCategories = await prisma.deviceCategories.findMany();
+
+    response.json(allDevicesCategories);
+  }
+
+  async createDeviceCategory(request, response) {
+    const prisma = new PrismaClient();
+
+    let {
+      title,
+      isNetDev
+    } = request.body;
+
+    const deviceCategory = await prisma.deviceCategories.create({
+      data: {
+        title,
+        isNetDev
+      }
+    })      
+      
+    response.json(deviceCategory);
+
+  }
+
+  async getDevices(request, response) {
+    const prisma = new PrismaClient();
+
+    const allDevices = await prisma.devices.findMany({
+      include: {
+        operationalCategory: true,
+        category: true
+      }
+    });
+
+    response.json(allDevices);
+  }
+
+  async getDevice(request, response) {
+    const id = request.params.id;
+    const { devices } = new PrismaClient();
+    const device = await devices.findFirst({select: { id }})
+    
+    response.json(device);
+  }
+
+  async createDevice(request, response) {
 
     const prisma = new PrismaClient();
     let { 
@@ -38,109 +130,10 @@ class CreateDeviceService  {
 
     response.json(device);
   }
-}
 
-class GetDevicesService {
-  async handle(request, response) {
-    const prisma = new PrismaClient();
-
-    const allDevicesCategories = await prisma.devices.findMany({
-      include: {
-        operationalCategory: true,
-        category: true
-      }
-    });
-
-    response.json(allDevicesCategories);
-  }
-}
-
-class GetDevice {
-  async handle(request, response) {
-    const id = request.params.id;
-    const { devices } = new PrismaClient();
-    const device = await devices.findFirst({select: { id }})
-    
-    response.json(device);
-  }
-}
-
-// DEVICE CATEGORY
-class CreateDeviceCategoryController {
-  async handle(request, response) {
-    const prisma = new PrismaClient();
-
-    let {
-      title,
-      isNetDev
-    } = request.body;
-
-    const deviceCategory = await prisma.deviceCategories.create({
-      data: {
-        title,
-        isNetDev
-      }
-    })      
-      
-    response.json(deviceCategory);
-
-  }
-}
-
-class GetDeviceCategories {
-  async handle(request, response) {
-    const prisma = new PrismaClient();
-
-    const allDevicesCategories = await prisma.deviceCategories.findMany();
-
-    response.json(allDevicesCategories);
-  }
-}
-
-// DEVICE USER
-class EditDevice {
-  async handle(request, response) {
-    let {
-      id, 
-      alias, 
-      category, 
-      specification, 
-      macCable, 
-      macWireless, 
-      ipCable, 
-      ipWireless, 
-      state,
-      ramal,
-      operationalCategoriesId
-    } = request.body;
-
-    const prisma = new PrismaClient();
-    const device = await prisma.devices.update({
-      where: {
-        id
-      },
-      data: {
-        alias, 
-        category, 
-        specification, 
-        macCable, 
-        macWireless, 
-        ipCable, 
-        ipWireless, 
-        state,
-        ramal,
-        operationalCategoriesId
-      }
-    })
-    response.json(device);
-  }
+  
 }
 
 module.exports = { 
-  CreateDeviceService, 
-  GetDevicesService, 
-  GetDevice,
-  CreateDeviceCategoryController, 
-  GetDeviceCategories,
-  EditDevice
+  DeviceService
 }

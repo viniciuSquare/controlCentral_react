@@ -1,7 +1,19 @@
 const {PrismaClient} = require('@prisma/client')
 
-class CreateLocationService {
-  async handle(request, response) {
+class LocationsServices {
+  async getLocations (request, response) {
+    const prisma = new PrismaClient();
+
+    const locations = await prisma.locations.findMany({
+      include: {
+        operationalCategory: true
+      }
+    });
+
+    response.json(locations)
+  }
+
+  async createLocation(request, response) {
     const prisma = new PrismaClient();
     let {
       title,
@@ -15,21 +27,35 @@ class CreateLocationService {
         description,
         operationCategory
       }
-    })
-
+    }).finally(async ()=> await prisma.$disconnect());
+    
     response.status(201).json(location);
   }
-}
 
-class GetLocationsService {
-  async handle (request, response) {
+  async editLocation(request, response) {
     const prisma = new PrismaClient();
+    const {
+      id,
+      title,
+      description,
+      operationalCategory
+    } = request.body;
 
-    const locations = await prisma.locations.findMany();
-
-    response.json(locations)
+    const editedLocation = await prisma.locations.update({
+      where: {
+        id
+      },
+      data: {
+        title,
+        description,
+        operationalCategoryId: operationalCategory
+      },
+      include: {
+        operationalCategory: true
+      }
+    })
+    response.json(editedLocation);
   }
-
 }
 
-module.exports = {CreateLocationService, GetLocationsService}
+module.exports = { LocationsServices }
