@@ -1,6 +1,5 @@
 import { HomeStyled } from './styled.jsx'
 
-import { ContentPane } from '../../components/ContentPane/index.jsx';
 import { TaskItem } from '../../components/Task/index.jsx';
 
 // mock data
@@ -9,7 +8,7 @@ import salaryImg from '../../assets/images/salary.jpeg'
 export function Home() {
   return (
     <HomeStyled>
-      <ContentPane 
+      <div 
       // primary headless main
         title={<>
           <h2>02 jul,</h2> <h3> friday</h3>
@@ -19,7 +18,7 @@ export function Home() {
           <TaskItem />
           <TaskItem />
         </div>
-      </ContentPane>
+      </div>
       
       {/* <ContentPane 
         title="Avisos"

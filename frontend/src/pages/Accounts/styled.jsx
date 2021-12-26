@@ -1,107 +1,50 @@
 import styled from "styled-components";
 
-export const StyledDevicesPage = styled.div`
+export const AccountsPageStyled = styled.div`
   display: grid;
   grid-template-columns: 10% auto 10%;
   
   width: 100%;
 
-  /* SYSTEM COMPONENTS DEFAULTS */
-  .warning {
-    font-size: 1.2rem
-  }
-  /* GENERAL SETTINGS */
-  .align-horizontal {
-    display: flex;
-    align-items: center;
-
-    &.spaced {
-      justify-content: space-between;
-
-    }
-  }
-
-  .left-side {
-    padding-top: 1rem;
-    .container-head {
-      display: flex;
-      justify-content: space-between;
-      /* margin-right: 1.5rem; */
-    }
-
-    .l-content {
-      display: flex;
-      flex-direction: column;
-      width: 95%;
-
-      .left-side-menu{
-        padding-right: 0.5rem;
-
-        input#new-category-title, button#toggle-new-device-modal {
-          width: 100%;
-        }
-
-        button#toggle-new-device-modal {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .new-category-modal {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          
-          margin: 1rem 0;
-          
-          div {
-            width: 100%;
-          }
-
-          input {
-            padding-left: 0.5rem;
-            height: 1.6rem;
-          }
-        }
-      }
-    }
-  }
-
-  .field-group-name {
-    opacity: 0.6;
-    margin-top: 1rem;
-  }
-
   .container-pane {
     display: grid;
     grid-template-rows: 4rem auto 2rem 30%;
+
+    /* MAIN CONTENT */
+    .title-n-tools {
+      display: flex;
+      justify-content: space-between;
+
+      padding: 8px 0;
+      .tools {
+        display: flex;
+        gap: 2rem;
+      }
+    }
 
     .pane-content {
       margin-bottom: 1.5rem;
     }
     
-    #devices-listage {
+    #accounts-listage {
       background-color: #E0EAFC;
       height: 100%;
 
       border-radius: 12px;
-
-      display: flex;
-      flex-direction: column;
    
       tr, thead {
-        grid-template-columns: 2fr 2fr 2fr 1.5fr 1.5fr;
+        grid-template-columns: 2fr 2fr 1.5fr;
       }
 
     }
 
-    .device-details-container {
+    .account-details-container {
       padding: 1rem;
 
       border-radius: 12px;
       background-color: #E0EAFC;
 
-      #device-details{
+      #account-details{
         display: grid;
         grid-template-columns: 20% auto 3rem;
 
@@ -143,45 +86,23 @@ export const StyledDevicesPage = styled.div`
 
       table {
         display: flex;
-        tr {
-          grid-template-columns: 1fr 1fr;
-          td {
-            padding-right: 0.5rem;
-            font-size: 1rem;
-          }
-          
+        td {
+          padding-right: 0.5rem;
+          font-size: 1rem;
         }
       }
-
       
     }
   }
+`
+export const AccountListStyled = styled.table`
+  thead, tr {
+    grid-template-columns: 1fr 1fr 1fr;
 
-  .right-side {
-    /* background-color: lightcoral; */
   }
-
-  /* MAIN CONTENT */
-  .title-n-tools {
-    display: flex;
-    justify-content: space-between;
-
-    padding: 8px 0;
-    .tools {
-      display: flex;
-      gap: 2rem;
-    }
-  }
-  .device-tools {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    
-  }
-
 `
 
-export const StyledNewDeviceForm = styled.div`
+export const AccountFormModalStyled = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -255,7 +176,7 @@ export const StyledNewDeviceForm = styled.div`
       border-radius: 4px;
     }
     
-    #submit-dev {
+    #submit-account {
       background: lightblue;
       height: 2.5rem;
       
@@ -264,4 +185,5 @@ export const StyledNewDeviceForm = styled.div`
       align-self: flex-end;
     }
   }
+
 `

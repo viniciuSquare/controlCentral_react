@@ -33,7 +33,6 @@ export function SidebarMenu({
 }
 
 const CategoriesNav=({categories})=>{
-  console.log(categories)
   return(
     <CategoriesNavStyled id="pageCategoriesList">
       { 

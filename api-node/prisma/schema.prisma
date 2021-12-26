@@ -16,7 +16,7 @@ model Devices {
   category            DeviceCategories?      @relation(fields: [deviceCategoryId], references: [id])
   specification       String?
   serviceTag          String?
-  cpu          String?
+  cpu                 String?
   macCable            String?
   macWireless         String?
   ipCable             String?
@@ -25,7 +25,7 @@ model Devices {
   isSource            Boolean?
   operationalCategory OperationalCategories? @relation(fields: [operationalCategoriesId], references: [id])
 
-  UserDevice              UserDevices[]
+  UserDevice              DeviceUser[]
   deviceCategoryId        Int?
   operationalCategoriesId Int?
 }
@@ -47,6 +47,60 @@ model OperationalCategories {
   Locations Locations[]
 }
 
+model Locations {
+  id                  Int                    @id @default(autoincrement())
+  title               String
+  description         String?
+  operationalCategory OperationalCategories? @relation(fields: [operationalCategoryId], references: [id])
+
+  DeviceUser            DeviceUser[]
+  Tasks                 Tasks[]
+  User                  Users[]
+  operationalCategoryId Int?
+}
+
+model Users {
+  id         Int       @id @default(autoincrement())
+  name       String
+  username   String    @unique
+  department Locations @relation(fields: [locationsId], references: [id])
+
+  locationsId Int
+  DeviceUser  DeviceUser[]
+  Tasks       Tasks[]
+}
+
+model DeviceUser {
+  id       Int        @id @default(autoincrement())
+  user     Users      @relation(fields: [userId], references: [id])
+  device   Devices    @relation(fields: [devicesId], references: [id])
+  location Locations? @relation(fields: [locationId], references: [id])
+  account  Accounts?  @relation(fields: [accountsId], references: [id])
+
+  locationId Int
+  devicesId  Int
+  userId     Int
+  accountsId Int?
+}
+
+model Accounts {
+  id          Int          @id @default(autoincrement())
+  address     String
+  accountType Service_type @relation(fields: [service_typeId], references: [id])
+
+  service_typeId Int
+  DeviceUser     DeviceUser[]
+}
+
+model Service_type {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+
+  Accounts Accounts[]
+}
+
+// NOT IN PRODUCTION USAGE
 model Tasks {
   id          Int              @id @default(autoincrement())
   subject     String
@@ -79,47 +133,4 @@ model ActionStatus {
   description String
 
   Tasks Tasks[]
-}
-
-model Locations {
-  id                  Int                    @id @default(autoincrement())
-  title               String
-  description         String?
-  operationalCategory OperationalCategories? @relation(fields: [operationalCategoryId], references: [id])
-
-  UserDevices             UserDevices[]
-  Tasks                   Tasks[]
-  User                    Users[]
-  operationalCategoryId Int?
-}
-
-model Users {
-  id         Int       @id @default(autoincrement())
-  name       String
-  username   String    @unique
-  department Locations @relation(fields: [locationsId], references: [id])
-
-  locationsId Int
-  UserDevices UserDevices[]
-  Tasks       Tasks[]
-}
-
-model UserDevices {
-  id                Int                 @id @default(autoincrement())
-  location          Locations           @relation(fields: [locationId], references: [id])
-  user              Users               @relation(fields: [userId], references: [id])
-  device            Devices             @relation(fields: [devicesId], references: [id])
-  locationId        Int
-  devicesId         Int
-  Services_accounts Services_accounts[]
-  userId            Int
-}
-
-model Services_accounts {
-  id             Int         @id @default(autoincrement())
-  serviceName    String
-  accountAddress String
-  deviceUsage    UserDevices @relation(fields: [userDevicesId], references: [id])
-
-  userDevicesId Int
 }

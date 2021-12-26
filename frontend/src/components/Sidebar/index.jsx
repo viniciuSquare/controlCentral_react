@@ -15,7 +15,8 @@ import {
   BsDisplay,
   BsTelephone,
   BsPeople,
-  BsSignpost
+  BsSignpost,
+  BsPersonLinesFill
 } from 'react-icons/bs'
 
 export function Sidebar() {
@@ -52,7 +53,7 @@ export function Sidebar() {
         <nav>
           <SidebarMenu title="Home" icon={<BsHouseDoor size={iconSize}/>} path="/" />
           <SidebarMenu title="Employees" icon={<BsPeople size={iconSize}/>} path="/funcionarios" />
-          <SidebarMenu title="Ramals" icon={<BsTelephone size={iconSize}/>} path="/ramais" />
+          <SidebarMenu title="Contas" icon={<BsPersonLinesFill size={iconSize}/>} path="/contas" />
           <SidebarMenu title="Dispositivos" icon={<BsDisplay size={iconSize}/>} path="/dispositivos" />
           <SidebarMenu title="To-do" icon={<BsListCheck size={iconSize}/>} path="/tarefas" />
           <SidebarMenu title="Locais e setores" icon={<BsSignpost size={iconSize}/>} path="locais"/>

@@ -2,29 +2,34 @@ const {PrismaClient} = require('@prisma/client')
 
 class DeviceService {
   async editDevice(request, response) {
-    let {
+    let { 
       id, 
       alias, 
       category, 
+      serviceTag,
+      cpu,
+      user,
       specification, 
       macCable, 
       macWireless, 
       ipCable, 
       ipWireless, 
       state,
+      isSource,
       ramal,
-      operationalCategoriesId,
-      location
+      operationalCategory
     } = request.body;
 
     const prisma = new PrismaClient();
+
     const device = await prisma.devices.update({
       where: {
         id
       },
       data: {
         alias, 
-        category, 
+        serviceTag,
+        cpu,
         specification, 
         macCable, 
         macWireless, 
@@ -32,16 +37,33 @@ class DeviceService {
         ipWireless, 
         state,
         ramal,
-        operationalCategoriesId
+        isSource,
+        category: category ? parseInt(category) : null, 
+        operationalCategory: operationalCategory ? parseInt(operationalCategory) : null
       }
     })
-    if(location) {
-      const locationData = await prisma.locations.findUnique({
+
+    if(user?.id) {
+      const deviceUserRelation = await prisma.deviceUser.findUnique({
         where: {
-          id: location.id
+          user: {
+            id: user.id
+          }
         }
       })
+      if(!deviceUserRelation.devicesId == id) {
+        prisma.deviceUser.create({
+          data: {
+            device: id,
+            user: user.id
+          }
+        })
+
+      } else
+        response.json("Relation already exists");
+
     }
+
     response.json(device);
   }
   
@@ -100,38 +122,83 @@ class DeviceService {
       id, 
       alias, 
       category, 
+      serviceTag,
+      cpu,
       specification, 
       macCable, 
       macWireless, 
       ipCable, 
       ipWireless, 
       state,
+      isSource,
       ramal,
       operationalCategory
     } = request.body;
 
+
     if(!state) state = "Definir";
 
-    const device = await prisma.devices.create({
-      data: {
-        id, 
-        alias, 
-        deviceCategoryId: parseInt(category), 
-        specification, 
-        macCable, 
-        macWireless, 
-        ipCable, 
-        ipWireless, 
-        state,
-        ramal,
-        operationalCategoriesId: operationalCategory
-      }
-    });
+    if(typeof category == "object") {
 
-    response.json(device);
+      const device = await prisma.devices.create({
+        data: {
+          id, 
+          alias, 
+          serviceTag,
+          cpu,
+          specification, 
+          macCable, 
+          macWireless, 
+          ipCable, 
+          ipWireless, 
+          state,
+          ramal,
+          isSource,
+          category: {
+            create : {
+                title: category.title ,
+                isNetDev: category.isNetDev=="true" ? true : false
+              }
+            }, 
+          operationalCategory: operationalCategory ? parseInt(operationalCategory) : undefined
+        }
+      });
+      response.json(device)
+
+    } else {
+      const device = await prisma.devices.create({
+        data: {
+          id, 
+          alias, 
+          serviceTag,
+          cpu,
+          specification, 
+          macCable, 
+          macWireless, 
+          ipCable, 
+          ipWireless, 
+          state,
+          ramal,
+          isSource,
+          deviceCategoryId: category ? parseInt(category) : null, 
+          operationalCategoriesId: operationalCategory ? parseInt(operationalCategory) : null
+        }
+      });
+      response.json(device)
+
+    }
   }
 
-  
+  async deleteDevice(request, response) {
+    const prisma = new PrismaClient();
+    const {id} = request.params;
+    await prisma.devices.delete({ 
+      where : {
+        id: parseInt(id)
+      }
+    })
+      .finally(()=>response.json({msg: "deleted"}))    
+  }
 }
 
 module.exports = { 

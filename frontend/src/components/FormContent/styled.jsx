@@ -59,3 +59,11 @@ export const FormStyled = styled.div`
     }
   }
 `
+
+export const InputStyled = styled.div`
+  row-gap: 0.25rem;
+
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`

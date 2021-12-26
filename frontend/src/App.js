@@ -18,6 +18,9 @@ import { DataContextProvider } from './contexts/DataContext';
 
 import { useSession } from './hooks/useSession';
 import { SessionContextProvider } from './contexts/SessionContext';
+import { Accounts } from './pages/Accounts';
+import Base from './pages/Base';
+import { MockDevices } from './pages/mock_devices';
 
 export default function App() {
   const {isSidebarOpen} = useSession();
@@ -31,9 +34,14 @@ export default function App() {
               <div className="content">
                 <Header/> 
                 <Switch> 
+                  <Route path="/base" component={Base} />
+                  <Route path="/mock" component={MockDevices} />
+
                   <Route path="/" exact component={Home} />
                   <Route path="/tarefas" component={Tasks} />
                   <Route path="/tarefas/:taskId" component={Tasks} />
+
+                  <Route path="/contas" component={Accounts} />
 
                   <Route path="/funcionarios" component={Employees} />
 

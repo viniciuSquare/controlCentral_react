@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { ContentPane } from "../../components/ContentPane"
 import NewTaskModal from "./NewTaskModal";
 
 import plusIcon from '../../assets/buttons/plus.svg'

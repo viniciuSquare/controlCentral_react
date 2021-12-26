@@ -13,6 +13,7 @@ const devicesRouter = require('express').Router();
 devicesRouter.post('/', new DeviceService().createDevice);
 devicesRouter.get('/',  new DeviceService().getDevices);
 devicesRouter.put('/',  new DeviceService().editDevice);
+devicesRouter.put('/:id',  new DeviceService().deleteDevice);
 devicesRouter.get("/", new DeviceService().getDevice);
 
 devicesRouter.post("/categoria", new DeviceService().createDeviceCategory);

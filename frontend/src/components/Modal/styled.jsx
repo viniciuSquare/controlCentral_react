@@ -26,6 +26,7 @@ export const ModalStyled = styled.div`
     margin: auto;
 
     border-radius: 8px;
+    overflow-y: auto;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }

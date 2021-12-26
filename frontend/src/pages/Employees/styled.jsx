@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { ContentPane } from '../../components/ContentPane'
 
 export const EmployeesStyled = styled.div`
   display: grid;
