@@ -3,6 +3,7 @@ import { BsPencilSquare, BsThreeDots } from 'react-icons/bs';
 
 import api from '../../api/api';
 import { useSession } from '../../hooks/useSession';
+import { StyledDataPage } from '../Base/styled';
 
 import { LocationsPageStyled } from './styled'
 
@@ -38,9 +39,8 @@ export function LocationsPage( ) {
     setNavCategories(categories)
 
   },[locations])
-  const iconSize = 18
   return(
-    <LocationsPageStyled>
+    <StyledDataPage>
       <div className="left-side">
       </div>
       <div className="container-pane">
@@ -54,44 +54,52 @@ export function LocationsPage( ) {
             </div>  
           </div>
         </div>
-        
-        <table>
-          <thead>
-            <th>Nome</th>
-            <th>Categoria</th>
-            <th>Descrição</th>
-            <th>Mais</th>
-          </thead>
-          <tbody>
-            {
-              locations.length > 0 &&
-                (
-                  locations.map( location => {
-                    return(
-                      <tr>
-                        <td>{location.title}</td>
-                        <td>{location.operationalCategory?.title || "Não definido"}</td>
-                        <td className="align-left normal-line-height" >{location.description}</td>
-                        <td className="tools-td">
-                          <button>
-                            <BsThreeDots size={iconSize} />
-                          </button>
-                          <button>
-                            <BsPencilSquare size={iconSize} />
-                          </button>
-                        </td>
-                      </tr>
-                    )
-                  })
-                )
-            }
-          </tbody>
-        </table>
-
+        <div className="pane-content">
+          <LocationsList data={locations}/>
+        </div>
       </div>
       <div className="right-side"></div>
       
-    </LocationsPageStyled>
+    </StyledDataPage>
   )
 
+}
+
+const LocationsList = ({data})=> {
+  const iconSize = 18
+
+  return (
+    <table id="locations-listage">
+      <thead>
+        <th>Nome</th>
+        <th>Categoria</th>
+        <th>Descrição</th>
+        <th>Mais</th>
+      </thead>
+      <tbody>
+        {
+          data.length > 0 &&
+            (
+              data.map( location => {
+                return(
+                  <tr>
+                    <td>{location.title}</td>
+                    <td>{location.operationalCategory?.title || "Não definido"}</td>
+                    <td className="align-left normal-line-height" >{location.description}</td>
+                    <td className="tools-td">
+                      <button>
+                        <BsThreeDots size={iconSize} />
+                      </button>
+                      <button>
+                        <BsPencilSquare size={iconSize} />
+                      </button>
+                    </td>
+                  </tr>
+                )
+              })
+            )
+        }
+      </tbody>
+    </table>
+  )
 }

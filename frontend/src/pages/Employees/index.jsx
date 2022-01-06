@@ -6,6 +6,7 @@ import Modal from "../../components/Modal";
 
 import api from '../../api/api.js'
 import { FormStyled } from "../../components/FormContent/styled";
+import { StyledDataPage } from "../Base/styled";
 
 export function Employees() {
   const [ isModalVisible, setIsModalVisible ] = useState();
@@ -22,11 +23,11 @@ export function Employees() {
   }, [])
 
   return(
-    <EmployeesStyled>
+    <StyledDataPage>
       <div className="left-side">
         
       </div>
-      <div className="pane-content">
+      <div className="container-pane">
         <div className="head">
           <div className="title-n-tools">
             <h1 className="page-title">Colaboradores</h1>
@@ -42,42 +43,19 @@ export function Employees() {
           }
           
         </div>
-        <table id="employees-table">
-          <thead>
-            <th>Department</th>
-            <th>User</th>
-            <th>Options</th>
-          </thead>
-          <tbody>
-            {
-              employees.length > 1 &&
-                employees?.map( employee => {
-                  return(
-                    <tr kay={employee.id}>
-                      <td>{employee.department.title}</td>
-                      <td>{employee.name}</td>
-                      <td>
-                        <button>
-                          <img src={userDataIcon} alt="" />
-                        </button>
-                      </td>
-                    </tr>
-                  )
-                })
-            }
-          </tbody>
-
-        </table>
+        <div className="pane-content">
+          <EmployeesList data={employees}/>
+        </div>
       </div>
       <div className="right-side">
         
       </div>
-    </EmployeesStyled>
+    </StyledDataPage>
     
   )
 }
 
-const NewEmployeeForm= ()=> {
+const NewEmployeeForm= ({closer})=> {
 
   const[locations, setLocations] = useState({})
 
@@ -87,7 +65,31 @@ const NewEmployeeForm= ()=> {
 
   },[])
 
-  const [isToCreateNewLocation, setIsToCreateNewLocation] = useState(false);
+  // FORM SUBMITTION
+  async function submit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target)
+    let data = Object.fromEntries(formData)
+
+    if(data["location"] == "new") {
+      data.location = {
+        title: data["location-title"],
+        description: data["location-description"]
+      }
+    }
+    delete data["location-title"];
+    delete data["location-description"];
+
+    let {data:creationResult, status} = await api.post("usuarios/", data);
+    if(status == 200 || status == 201) {
+      closer();
+    }
+    
+    console.log(creationResult);
+  } 
+
+  const [isToCreateNewLocation, setIsToCreateNewLocation] = useState(true);
   const toggleNewLocationFormVisibility = ()=> setIsToCreateNewLocation(!isToCreateNewLocation);
   const handleLocationSelection = (event)=>{
     if(event.target.value=="new" && !isToCreateNewLocation) 
@@ -98,17 +100,17 @@ const NewEmployeeForm= ()=> {
   }
 
   return(
-    <Modal>
+    <Modal toggleVisibility={closer}>
       <FormStyled>
         <h1 id="form-title">Novo usuário</h1>
-        <form>
+        <form onSubmit={submit}>
           <h3 className="field-group-name title" >
             Dados do usuário
           </h3>
           <div className="input-group">
             <div className="wrapper input">
-              <label htmlFor="first-name">Nome completo</label>
-              <input type="text" name="first-name" />
+              <label htmlFor="name">Nome completo</label>
+              <input type="text" name="name" />
             </div>
             <div className="wrapper input">
               <label htmlFor="username">Username</label>
@@ -160,4 +162,35 @@ const NewEmployeeForm= ()=> {
     </Modal>
   )
 
+}
+
+const EmployeesList = ({data}) => {
+  return(
+    <table id="employees-listage">
+      <thead>
+        <th>User</th>
+        <th>Department</th>
+        <th>Options</th>
+      </thead>
+      <tbody>
+        {
+          data.length > 1 &&
+            data?.map( employee => {
+              return(
+                <tr kay={employee.id}>
+                  <td>{employee.name}</td>
+                  <td>{employee.department.title}</td>
+                  <td>
+                    <button>
+                      <img src={userDataIcon} alt="" />
+                    </button>
+                  </td>
+                </tr>
+              )
+            })
+        }
+      </tbody>
+
+    </table>
+  )
 }

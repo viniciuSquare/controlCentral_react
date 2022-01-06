@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import api from '../../api/api';
-import { Input } from '../../components/FormContent';
+import api from '../../../api/api';
+import { Input } from '../../../components/FormContent';
 
-import Modal from '../../components/Modal';
+import Modal from '../../../components/Modal';
 
-import { StyledNewDeviceForm } from './styled';
+import { StyledNewDeviceForm } from '../styled';
 
 export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
   // HANDLE FORM
@@ -16,11 +16,12 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
   const toggleNewCategoryFormVisibility = () => setIsNewCategoryFormVisible(!isNewCategoryFormVisible);
     
   const [device, setDevice] = useState({});
+
   useEffect(()=>{
     if(!deviceToEdit) {
       setDevice({});
     } else {
-      setDevice(device);
+      setDevice(deviceToEdit);
     }
   },[])
 
@@ -111,11 +112,16 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
           <h3 className="field-group-name title" >
             Dados do dispositivo
           </h3>
-          <Input name="alias" label="Título" placeholder="dev-title" />
+          {
+            device.id 
+              ? <input type="hidden" value={device.id}  />
+              : null
+          }
+          <Input value={device.alias} name="alias" label="Título" placeholder="dev-title" />
           
           <div className="input-group">
-            <Input name="serviceTag" label="Modelo" placeholder="dev-model" /> 
-            <Input name="cpu" label="Processador" />
+            <Input value={device.serviceTag} name="serviceTag" label="Modelo" placeholder="dev-model" /> 
+            <Input value={device.cpu} name="cpu" label="Processador" />
           </div>
 
           <div name="dev" className="wrapper" >
@@ -138,8 +144,6 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
           { isNetDev &&
             <NetDeviceForm/>
           }
-          
-          
           
           {/* <input type="text" name="dev-mac-wireless" /> */}
           <button 

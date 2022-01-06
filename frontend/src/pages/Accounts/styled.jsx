@@ -96,10 +96,7 @@ export const AccountsPageStyled = styled.div`
   }
 `
 export const AccountListStyled = styled.table`
-  thead, tr {
-    grid-template-columns: 1fr 1fr 1fr;
-
-  }
+  
 `
 
 export const AccountFormModalStyled = styled.div`

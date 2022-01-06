@@ -10,6 +10,7 @@ export const StyledDataPage = styled.div`
   .warning {
     font-size: 1.2rem
   }
+  
   /* GENERAL SETTINGS */
   .align-horizontal {
     display: flex;
@@ -20,6 +21,7 @@ export const StyledDataPage = styled.div`
 
     }
   }
+
   .left-side {
     padding-top: 1rem;
     .container-head {
@@ -77,6 +79,49 @@ export const StyledDataPage = styled.div`
 
     .pane-content {
       margin-bottom: 1.5rem;
+
+      table {
+        background-color: #E0EAFC;
+        height: 100%;
+
+        border-radius: 12px;
+
+        display: flex;
+        flex-direction: column;
+      }
+      
+      /* GRID SPECIFICATION FOR PAGES TABLE */
+      
+      #accounts-listage {
+        thead, tr {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      }
+      
+      #devices-listage {    
+        tr, thead {
+          grid-template-columns: 2fr 2fr 2fr 1.5fr 1.5fr;
+        }
+      }
+
+      #employees-listage {
+        tr, thead {
+          grid-template-columns: 2fr 2fr 2fr;
+        }
+      }
+      
+      #locations-listage {
+        thead, tr {
+          grid-template-columns: 0.3fr 0.4fr 1fr 0.5fr;
+        }
+
+      }
+
+      #tasks-listage {
+        tr, thead {
+          grid-template-columns: 0.8fr 2fr 2fr 2fr 1.5fr 1.5fr;
+        }
+      }
     }
 
     /* .field-title {  DEFINED AT GLOBAL SCOPE

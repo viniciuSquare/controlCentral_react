@@ -3,9 +3,9 @@ import api from '../../api/api';
 
 import Modal from '../../components/Modal';
 
-import { AccountFormModalStyled, StyledNewaccountForm } from './styled';
+import { AccountFormModalStyled } from './styled';
 
-export const NewAccountModal = ({accountCategories, accountToEdit, closer}) => {
+export const NewAccountModal = ({accountToEdit, closer}) => {
   // HANDLE FORM
   const [formInputs, setFormInputs] = useState({});
   const [devCode, setDevCode] = useState("");
@@ -24,7 +24,7 @@ export const NewAccountModal = ({accountCategories, accountToEdit, closer}) => {
   },[])
   
   useEffect(()=>{
-    if(formInputs.accountType == "new") 
+    if(formInputs.service == "new") 
       setIsNewCategoryFormVisible(true)
     else
       setIsNewCategoryFormVisible(false)
@@ -47,14 +47,22 @@ export const NewAccountModal = ({accountCategories, accountToEdit, closer}) => {
     const formData = new FormData(event.target)
     let data = Object.fromEntries(formData)
     
-    console.log(data);
+    if(data.service == "new") {
+      data.service = {
+        name: data["new-service-name"],
+        description: data["new-service-description"]
+      }
+    }
+    delete data["new-service-name"];
+    delete data["new-service-description"];
 
-    // let {data:creationResult, status} = await api.post("dispositivos/", data);
-    // if(status == 200 || status == 201) {
-    //   closer();
-    // }
-    
-    // console.log(creationResult);
+    // console.log(data);
+
+    let {data:creationResult, status} = await api.post("contas/", data);
+    if(status == 200 || status == 201) {
+      closer();
+    }
+    console.log(creationResult);
   }  
 
   // TODO - RESET FORM FIELDS
@@ -94,8 +102,8 @@ export const NewAccountModal = ({accountCategories, accountToEdit, closer}) => {
           </div> */}
           <div className="input-group">
             <div className="wrapper">
-              <label htmlFor="account-type">Serviço</label>
-              <select type="text" name="account-type" >
+              <label htmlFor="service">Serviço</label>
+              <select type="text" name="service" >
                 {/* TODO */}
                 <option value="select disabled" >Selecione a categoria</option>
 
@@ -126,13 +134,13 @@ const AccountTypeForm = () => {
         Criar tipo de serviço
       </h3>
       <div className="wrapper">
-        <label htmlFor="newAccountType">Nome do seriço</label>
-        <input type="text" name="newAccountType" id="service-name" />
+        <label htmlFor="new-service-name">Nome do seriço</label>
+        <input type="text" name="new-service-name" id="service-name" />
       </div>
       <div className="wrapper">
-        <label htmlFor="account-type">Descrição</label>
+        <label htmlFor="new-service-description">Descrição</label>
         <textarea 
-          name="description" 
+          name="new-service-description" 
           cols="30" rows="7" 
           placeholder="Descriva o serviço e principais recurtos"
         />

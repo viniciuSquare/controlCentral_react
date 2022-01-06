@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 
-import { StyledDevicesPage } from "./styled";
-import { BsLink45Deg, BsNodePlus, BsPencilSquare, BsPlus, BsThreeDots, BsTrash, BsTrash2Fill } from 'react-icons/bs';
+import { BsLink45Deg, BsPencilSquare, BsThreeDots, BsTrash2Fill } from 'react-icons/bs';
 
 import api from '../../api/api';
 
-import { NewDeviceModal } from './DeviceFormModal';
-import Modal from '../../components/Modal';
+import { NewDeviceModal } from './partials/DeviceFormModal';
 import { useSession } from '../../hooks/useSession';
+
+import { DetailsContainer, StyledDataPage } from '../Base/styled';
+
+import Modal from '../../components/Modal';
 
 const apiPath = "/dispositivos"
 
@@ -22,9 +24,13 @@ export function Devices() {
   const [ isContentLoaded, setIsContentLoaded ] = useState();
   
   const [ selectedDevice, setSelectedDevice ] = useState({});
+  const [ deviceToEdit, setDeviceToEdit ] = useState({});
 
   const [ isModalVisible, setIsModalVisible ] = useState();
-  const toggleVisibility = () => setIsModalVisible(!isModalVisible)
+  const toggleModalVisibility = () => setIsModalVisible(!isModalVisible)
+  
+  const [ isEditionModalVisible, setEditionModalVisibility ] = useState();
+  const toggleEditionModalVisibility = () => setEditionModalVisibility(!isEditionModalVisible);
 
   const [ isNewCategoryModalVisible, setIsNewCategoryModalVisible ] = useState();
   const toggleNewCategoryModalVisibility = () => setIsNewCategoryModalVisible(!isNewCategoryModalVisible);
@@ -47,58 +53,22 @@ export function Devices() {
   }, [])
 
   useEffect(()=>{
+    console.log(selectedDevice, "MUDOU NOVAMENTE")
     if(!isContentLoaded)
       setIsContentLoaded(true);
+    if(selectedDevice.intent == "edit") {
+      setDeviceToEdit(selectedDevice);
+      toggleModalVisibility()
+
+    }
         
   }, [selectedDevice, devices])
 
-  // LEFT SIDE FORM
-  async function submitNewDeviceCategory(event) {
-    event.preventDefault();
-
-    const formData = new FormData(event.target)
-    let data = Object.fromEntries(formData)
-    data.isNetDev = data.isNetDev == 'on' ? true : false
-
-    let {data:creationResult} = await api.post("dispositivos/categoria/", data);
-    
-    console.log(creationResult);
-  }
-
   return (
-    <StyledDevicesPage>
+    <StyledDataPage>
       <div className="left-side">
         {/* <div className="container-head"></div> */}
         <div className="l-content">
-          {/* <div className="left-side-menu">
-            <button onClick={toggleNewCategoryModalVisibility} id="toggle-new-device-modal" >
-              <strong>Nova categoria</strong>
-              <BsPlus size="24"/>
-            </button>
-            {
-              isNewCategoryModalVisible &&
-                <form onSubmit={submitNewDeviceCategory} className="new-category-modal  " >
-                  <div>
-                    <input  
-                      id="new-category-title" 
-                      type="text" 
-                      placeholder="Título da categoria..." 
-                      name="title"
-                    />
-                    <div className="input-group align-horizontal spaced">
-                      <label htmlFor="isNetDev">Dispositivo de rede?</label>
-                      <input  
-                        type="checkbox" 
-                        name="isNetDev"
-                      />
-                    </div>
-                  </div>
-                  <button type="submit">
-                    <BsNodePlus size="24"/>
-                  </button>
-                </form>
-            }
-          </div> */}
         </div>
       </div>
       <div className="container-pane">
@@ -108,11 +78,11 @@ export function Devices() {
             <div className="tools">
               <input type="text" />
               <hr className="vertical" />
-              <button onClick={toggleVisibility} > Add device</button>
+              <button onClick={toggleModalVisibility} > Add device</button>
             </div>
           </div>
           { isModalVisible //NEW DEVICE MODAL
-              && <NewDeviceModal devicesCategories={navCategories}closer={toggleVisibility}/> 
+              && <NewDeviceModal deviceToEdit={deviceToEdit} devicesCategories={navCategories} closer={toggleModalVisibility}/> 
           }
           
         </div>
@@ -124,15 +94,20 @@ export function Devices() {
       <div className="right-side">
 
       </div>
-    </StyledDevicesPage>
+    </StyledDataPage>
   )
 }
 
 const DeviceList= ({devices, handleItemSelection})=> {
 
-  function handleDataSelection(event){
-    const {target} = event;
+  const [selectedItem, setSelectedItem] = useState({});
 
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
+  const toggleEditFormVisibility = () => setIsEditFormVisible(!isEditFormVisible);
+
+  const handleSelectionIntent = (selectedItem, intent) => {
+    selectedItem.intent = intent;
+    handleItemSelection(selectedItem);
   }
 
   return(
@@ -150,22 +125,16 @@ const DeviceList= ({devices, handleItemSelection})=> {
             (
               devices.map( device => {
                 return (
-                  <tr key={device.id} onClick={handleDataSelection} >
+                  <tr key={device.id} >
                     <td  >{device.alias}</td>
                     <td  >{device.category?.title||"Indefinido" }</td>
                     <td  >{device.ip}</td>
                     <td  >{device.setor}</td>
                     <td  >
-                      <div className="device-tools" >
+                      <div className="data-tools" >
                         <button><BsLink45Deg size="24" /></button>
-                        <button onClick={ ()=> {
-                            <Modal>
-
-                            </Modal>
-                          } 
-
-                        } ><BsPencilSquare size="24" /></button>
-                        <button onClick={()=>handleItemSelection(device)} ><BsThreeDots size="24" /></button>
+                        <button onClick={()=> handleSelectionIntent(device,"edit") }><BsPencilSquare size="24" /></button>
+                        <button onClick={()=> handleItemSelection(device)} ><BsThreeDots size="24" /></button>
                       </div>
                     </td>
                   </tr>
@@ -174,6 +143,7 @@ const DeviceList= ({devices, handleItemSelection})=> {
             )
           )
         }
+        
       </tbody>
     </table>
   )
@@ -189,11 +159,11 @@ const DeviceDetails = ({device}) => {
   return(
     <>
       <h1 className="field-title">Detalhes da selação</h1>
-      <div className="device-details-container" >
+      <DetailsContainer >
         { device.id
           ? (
             <>
-              <div id="device-details">
+              <div id="data-details">
                 <div className="head">
                   <div className="title">
                     <p>Nome</p>
@@ -275,7 +245,7 @@ const DeviceDetails = ({device}) => {
           )
       }
         
-      </div>
+      </DetailsContainer>
     </>
   )
 

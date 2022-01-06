@@ -71,6 +71,8 @@ class DeviceService {
     const prisma = new PrismaClient();
 
     const allDevicesCategories = await prisma.deviceCategories.findMany();
+    
+    prisma.$disconnect();
 
     response.json(allDevicesCategories);
   }
@@ -89,7 +91,9 @@ class DeviceService {
         isNetDev
       }
     })      
-      
+    
+    prisma.$disconnect()
+  
     response.json(deviceCategory);
 
   }
@@ -163,6 +167,9 @@ class DeviceService {
           operationalCategory: operationalCategory ? parseInt(operationalCategory) : undefined
         }
       });
+      
+      prisma.$disconnect()
+      
       response.json(device)
 
     } else {
@@ -184,6 +191,7 @@ class DeviceService {
           operationalCategoriesId: operationalCategory ? parseInt(operationalCategory) : null
         }
       });
+      prisma.$disconnect()
       response.json(device)
 
     }

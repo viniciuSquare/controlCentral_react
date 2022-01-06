@@ -47,22 +47,22 @@ export const Form = ({submitEndpoint, children}) => {
   )
 }
 
-export const Input = ({label,type = "text", name = label, placeholder}) => {
+export const Input = ({label,type = "text", name = label,...rest}) => {
   return (
     <InputStyled>
       <label htmlFor={name}>{label}</label>
-      <input 
-        placeholder={placeholder} type={type} name={name} /> 
+      <input
+        {...rest} type={type} name={name} /> 
     </InputStyled>
   )
 
 }
-export const InputGroup = ({label,type = "text", name = label, placeholder}) => {
+export const InputGroup = ({label,type = "text", name = label, ...rest}) => {
   return (
     <InputStyled>
       <label htmlFor={name}>{label}</label>
       <input 
-        placeholder={placeholder} type={type} name={name} /> 
+        {...rest} type={type} name={name} /> 
     </InputStyled>
   )
 

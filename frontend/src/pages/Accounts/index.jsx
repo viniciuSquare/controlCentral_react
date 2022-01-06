@@ -9,6 +9,7 @@ import api from '../../api/api';
 import { NewAccountModal } from './AccountFormModal';
 import Modal from '../../components/Modal';
 import { useSession } from '../../hooks/useSession';
+import { DetailsContainer, StyledDataPage } from '../Base/styled';
 
 export function Accounts() {
   // DATA WILL COME FROM BACKEND
@@ -61,7 +62,7 @@ export function Accounts() {
   }
 
   return (
-    <AccountsPageStyled>
+    <StyledDataPage>
       <div className="left-side">
         <div className="container-head">
           <h3>Serviços</h3>
@@ -92,7 +93,7 @@ export function Accounts() {
       <div className="right-side">
 
       </div>
-    </AccountsPageStyled>
+    </StyledDataPage>
   )
 }
 
@@ -105,7 +106,7 @@ const AccountList= ({accounts, handleItemSelection})=> {
   }
 
   return(
-    <AccountListStyled id="accounts-listage"  className="with-td-division">
+    <table id="accounts-listage"  className="with-td-division">
       <thead>
         <th>Endereço de conta</th>
         <th>Serviço</th>
@@ -122,7 +123,7 @@ const AccountList= ({accounts, handleItemSelection})=> {
                     <td  >{account.address}</td>
                     <td  >{account.accountType?.name}</td>
                     <td  >
-                      <div className="account-tools" >
+                      <div className="data-tools" >
                         <button><BsLink45Deg size="24" /></button>
                         <button onClick={ ()=> {
                             <Modal>
@@ -141,7 +142,7 @@ const AccountList= ({accounts, handleItemSelection})=> {
           )
         }
       </tbody>
-    </AccountListStyled>
+    </table>
   )
 }
 
@@ -150,11 +151,11 @@ const AccountDetails = ({account}) => {
   return(
     <>
       <h1 className="field-title">Detalhes da selação</h1>
-      <div className="account-details-container" >
+      <DetailsContainer className="account-details-container" >
         { account?.id
           ? (
             <>
-              <div id="account-details">
+              <div id="data-details">
                 <div className="head">
                   <div className="title">
                     <h3>Uso</h3>
@@ -197,7 +198,7 @@ const AccountDetails = ({account}) => {
           )
       }
         
-      </div>
+      </DetailsContainer>
     </>
   )
 

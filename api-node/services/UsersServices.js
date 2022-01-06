@@ -33,7 +33,7 @@ class CreateUserService {
             break;
         }
       });
-
+      prisma.$disconnect();
       response.status(201).json(user);
 
     } else {
@@ -47,6 +47,7 @@ class CreateUserService {
           department: true
         }
       }).catch(errorCatch);
+      prisma.$disconnect();
       response.status(201).json(user);
     }
 

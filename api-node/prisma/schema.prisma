@@ -11,29 +11,32 @@ datasource db {
 }
 
 model Devices {
-  id                  Int                    @id @default(autoincrement())
-  alias               String
-  category            DeviceCategories?      @relation(fields: [deviceCategoryId], references: [id])
-  specification       String?
-  serviceTag          String?
-  cpu                 String?
-  macCable            String?
-  macWireless         String?
-  ipCable             String?
-  ipWireless          String?
+  id            Int               @id @default(autoincrement())
+  alias         String
+  category      DeviceCategories? @relation(fields: [deviceCategoryId], references: [id])
+  serviceTag    String?
+  cpu           String?
+  specification String?
+
+  // NET PROPS
+  ipCable     String?
+  ipWireless  String?
+  macCable    String?
+  macWireless String?
+  isSource    Boolean?
+
   state               String?
-  isSource            Boolean?
   operationalCategory OperationalCategories? @relation(fields: [operationalCategoriesId], references: [id])
 
-  UserDevice              DeviceUser[]
   deviceCategoryId        Int?
   operationalCategoriesId Int?
+  UserDevice              DeviceUser[]
 }
 
 model DeviceCategories {
-  id       Int     @id @default(autoincrement())
+  id       Int      @id @default(autoincrement())
   title    String
-  isNetDev Boolean @db.TinyInt
+  isNetDev Boolean? @db.TinyInt
 
   Devices Devices[]
 }
@@ -52,28 +55,35 @@ model Locations {
   title               String
   description         String?
   operationalCategory OperationalCategories? @relation(fields: [operationalCategoryId], references: [id])
+  localArea           Locations?             @relation("LocationsToLocations", fields: [locationsId], references: [id])
+  isDepartment        Boolean?
 
   DeviceUser            DeviceUser[]
   Tasks                 Tasks[]
   User                  Users[]
   operationalCategoryId Int?
+  locationsId           Int?
+  Locations             Locations[]  @relation("LocationsToLocations")
+  Users                 Users[]      @relation("user_department")
 }
 
 model Users {
-  id         Int       @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   name       String
-  username   String    @unique
-  department Locations @relation(fields: [locationsId], references: [id])
+  username   String     @unique
+  department Locations? @relation(fields: [departmentId], references: [id], name: "user_department")
+  location   Locations? @relation(fields: [locationsId], references: [id])
 
-  locationsId Int
-  DeviceUser  DeviceUser[]
-  Tasks       Tasks[]
+  locationsId  Int
+  departmentId Int
+  DeviceUser   DeviceUser[]
+  Tasks        Tasks[]
 }
 
 model DeviceUser {
   id       Int        @id @default(autoincrement())
-  user     Users      @relation(fields: [userId], references: [id])
-  device   Devices    @relation(fields: [devicesId], references: [id])
+  user     Users?     @relation(fields: [userId], references: [id])
+  device   Devices?   @relation(fields: [devicesId], references: [id])
   location Locations? @relation(fields: [locationId], references: [id])
   account  Accounts?  @relation(fields: [accountsId], references: [id])
 
@@ -102,16 +112,17 @@ model Service_type {
 
 // NOT IN PRODUCTION USAGE
 model Tasks {
-  id          Int              @id @default(autoincrement())
-  subject     String
-  description String
-  category    ActionCategories @relation(fields: [actionCategoriesId], references: [id])
-  location    Locations?       @relation(fields: [locationsId], references: [id])
-  requester   Users?           @relation(fields: [userId], references: [id])
-  status      ActionStatus     @relation(fields: [actionStatusId], references: [id])
-  priority    String
-  createdAt   DateTime
-  ticket      String
+  id           Int               @id @default(autoincrement())
+  subject      String
+  description  String
+  status       ActionStatus?     @relation(fields: [actionStatusId], references: [id])
+  priority     String?
+  category     ActionCategories? @relation(fields: [actionCategoriesId], references: [id])
+  location     Locations?        @relation(fields: [locationsId], references: [id])
+  requester    Users?            @relation(fields: [userId], references: [id])
+  ticket       String?
+  createdAt    DateTime          @default(now())
+  lastEditedAt DateTime?         @updatedAt
 
   locationsId        Int
   actionCategoriesId Int
@@ -120,17 +131,17 @@ model Tasks {
 }
 
 model ActionCategories {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   title       String
-  description String
+  description String?
 
   Tasks Tasks[]
 }
 
 model ActionStatus {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   title       String
-  description String
+  description String?
 
   Tasks Tasks[]
 }
