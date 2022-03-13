@@ -1,5 +1,4 @@
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
-
+import { BrowserRouter, Route, Router, Switch } from 'react-router-dom'
 
 import { Home } from './pages/Home'
 import { Tasks } from './pages/Tasks';
@@ -23,35 +22,33 @@ import { Accounts } from './pages/Accounts';
 export default function App() {
   const {isSidebarOpen} = useSession();
   return (
-    <SessionContextProvider>
       <DataContextProvider>
-          {/* CONTEXTS */}
-          <AppStyled className={classNames(isSidebarOpen ? "sidebar-open" : "sidebar-closed")}>
-            <BrowserRouter>
-              <Sidebar id="sidebar-menu"/>            
-              <div className="content">
-                <Header/> 
-                <Switch> 
-                  <Route path="/" exact component={Home} />
-                  <Route path="/tarefas" component={Tasks} />
-                  <Route path="/tarefas/:taskId" component={Tasks} />
+        {/* CONTEXTS */}
+        <AppStyled className={classNames(isSidebarOpen ? "sidebar-open" : "sidebar-closed")}>
+          <BrowserRouter>
+            <Sidebar id="sidebar-menu"/>            
+            <div className="content">
+              <Header/> 
+              <Switch> 
+                <Route path="/" exact component={Home} />
+                <Route path="/tarefas" component={Tasks} />
+                <Route path="/tarefas/:taskId" component={Tasks} />
 
-                  <Route path="/contas" component={Accounts} />
+                <Route path="/contas" component={Accounts} />
 
-                  <Route path="/funcionarios" component={Employees} />
+                <Route path="/funcionarios" component={Employees} />
 
-                  <Route path="/dispositivos" component={Devices} />
-                  <Route path="/dispositivos/:category" exact component={Devices} />
+                <Route path="/dispositivos" component={Devices} />
+                <Route path="/dispositivos/:category" exact component={Devices} />
 
-                  <Route path="/locais" component={LocationsPage} />
-                  <Route path="/base-conhecimento" component={Knowledge} />
-                </Switch>
-              </div>
-            </BrowserRouter>
-          </AppStyled>
-          {/* ------ */}
+                <Route path="/locais" component={LocationsPage} />
+                <Route path="/base-conhecimento" component={Knowledge} />
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </AppStyled>
+        {/* ------ */}
       </DataContextProvider>
-    </SessionContextProvider>
     
   );
 }

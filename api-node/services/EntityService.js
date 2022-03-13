@@ -1,0 +1,3 @@
+class EntityService {
+  // HANDLE EXCEPTIONS
+}

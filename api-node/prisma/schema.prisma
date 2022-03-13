@@ -12,11 +12,14 @@ datasource db {
 
 model Devices {
   id            Int               @id @default(autoincrement())
-  alias         String
+  hostname      String
   category      DeviceCategories? @relation(fields: [deviceCategoryId], references: [id])
   serviceTag    String?
+  inventoryCode String?
   cpu           String?
   specification String?
+  model         String?
+  brand         String?
 
   // NET PROPS
   ipCable     String?
@@ -25,12 +28,11 @@ model Devices {
   macWireless String?
   isSource    Boolean?
 
-  state               String?
-  operationalCategory OperationalCategories? @relation(fields: [operationalCategoriesId], references: [id])
+  state String?
 
-  deviceCategoryId        Int?
-  operationalCategoriesId Int?
-  UserDevice              DeviceUser[]
+  deviceCategoryId Int?
+  UserDevice       DeviceUser[]
+  DeviceAccounts   DeviceAccounts[]
 }
 
 model DeviceCategories {
@@ -41,30 +43,19 @@ model DeviceCategories {
   Devices Devices[]
 }
 
-model OperationalCategories {
-  id          Int     @id @default(autoincrement())
-  title       String
-  description String?
-
-  Devices   Devices[]
-  Locations Locations[]
-}
-
 model Locations {
-  id                  Int                    @id @default(autoincrement())
-  title               String
-  description         String?
-  operationalCategory OperationalCategories? @relation(fields: [operationalCategoryId], references: [id])
-  localArea           Locations?             @relation("LocationsToLocations", fields: [locationsId], references: [id])
-  isDepartment        Boolean?
+  id           Int        @id @default(autoincrement())
+  title        String
+  description  String?
+  localArea    Locations? @relation("LocationsToLocations", fields: [locationsId], references: [id])
+  isDepartment Boolean?
 
-  DeviceUser            DeviceUser[]
-  Tasks                 Tasks[]
-  User                  Users[]
-  operationalCategoryId Int?
-  locationsId           Int?
-  Locations             Locations[]  @relation("LocationsToLocations")
-  Users                 Users[]      @relation("user_department")
+  DeviceUser  DeviceUser[]
+  Tasks       Tasks[]
+  User        Users[]
+  locationsId Int?
+  Locations   Locations[]  @relation("LocationsToLocations")
+  Users       Users[]      @relation("user_department")
 }
 
 model Users {
@@ -93,6 +84,16 @@ model DeviceUser {
   accountsId Int?
 }
 
+model DeviceAccounts {
+  id      Int      @id @default(autoincrement())
+  device  Devices? @relation(fields: [devicesId], references: [id])
+  account Accounts @relation(fields: [accountsId], references: [id])
+  intent  String?
+
+  devicesId  Int?
+  accountsId Int
+}
+
 model Accounts {
   id          Int          @id @default(autoincrement())
   address     String
@@ -100,6 +101,7 @@ model Accounts {
 
   service_typeId Int
   DeviceUser     DeviceUser[]
+  DeviceAccounts DeviceAccounts[]
 }
 
 model Service_type {

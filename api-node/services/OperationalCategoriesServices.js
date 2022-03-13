@@ -1,8 +1,8 @@
-const {PrismaClient} = require('@prisma/client')
+const prisma = require('./PrismaClient');
 
 class CreateOperationalCategoryService {
   async handle(request, response) {
-    const prisma = new PrismaClient();
+    
 
     let {
       title,
@@ -23,7 +23,7 @@ class CreateOperationalCategoryService {
 
 class GetOperationalCategoriesService {
   async handle(request, response) {
-    const prisma = new PrismaClient();
+    
 
     const operationalCategories = await prisma.operationalCategories.findMany();
 

@@ -1,10 +1,8 @@
-const { PrismaClient } = require(".prisma/client");
+const prisma = require('./PrismaClient');
 
 class AccountServices {
 
   async getAccounts(request, response) {
-    const prisma = new PrismaClient();
-
     const accounts = await prisma.accounts.findMany({
       include : {
         accountType: true
@@ -18,7 +16,6 @@ class AccountServices {
   }
 
   async createAccount(request, response) {
-    const prisma = new PrismaClient()
 
     const {
       address,

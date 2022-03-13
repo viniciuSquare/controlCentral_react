@@ -56,6 +56,7 @@ export function Devices() {
     console.log(selectedDevice, "MUDOU NOVAMENTE")
     if(!isContentLoaded)
       setIsContentLoaded(true);
+      
     if(selectedDevice.intent == "edit") {
       setDeviceToEdit(selectedDevice);
       toggleModalVisibility()
@@ -100,8 +101,6 @@ export function Devices() {
 
 const DeviceList= ({devices, handleItemSelection})=> {
 
-  const [selectedItem, setSelectedItem] = useState({});
-
   const [isEditFormVisible, setIsEditFormVisible] = useState(false);
   const toggleEditFormVisibility = () => setIsEditFormVisible(!isEditFormVisible);
 
@@ -124,12 +123,14 @@ const DeviceList= ({devices, handleItemSelection})=> {
           devices.length > 0 &&
             (
               devices.map( device => {
+                console.log(device.ipWireless)
+                console.log(device.ipCable)
                 return (
                   <tr key={device.id} >
-                    <td  >{device.alias}</td>
+                    <td  >{device.hostname}</td>
                     <td  >{device.category?.title||"Indefinido" }</td>
-                    <td  >{device.ip}</td>
                     <td  >{device.setor}</td>
+                    <td  >{device.ipWireless || device.ipCable }</td>
                     <td  >
                       <div className="data-tools" >
                         <button><BsLink45Deg size="24" /></button>

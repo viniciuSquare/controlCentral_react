@@ -1,7 +1,7 @@
 import tayayaLogo from '../../assets/tayaya.png'
 import { SidebarStyled } from  './styled'
 
-import { SidebarMenu } from '../SidebarMenu'
+import { SidebarMenu } from './SidebarMenu'
 
 import { useSession } from '../../hooks/useSession'
 

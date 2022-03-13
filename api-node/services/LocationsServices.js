@@ -1,9 +1,7 @@
-const {PrismaClient} = require('@prisma/client')
+const prisma = require('./PrismaClient');
 
 class LocationsServices {
   async getLocations (request, response) {
-    const prisma = new PrismaClient();
-
     const locations = await prisma.locations.findMany({
       include: {
         operationalCategory: true
@@ -14,7 +12,6 @@ class LocationsServices {
   }
 
   async createLocation(request, response) {
-    const prisma = new PrismaClient();
     let {
       title,
       description,
@@ -33,7 +30,7 @@ class LocationsServices {
   }
 
   async editLocation(request, response) {
-    const prisma = new PrismaClient();
+    
     const {
       id,
       title,

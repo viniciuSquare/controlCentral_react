@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { NavLink, useLocation, useHistory } from 'react-router-dom';
-import { useSession } from '../../hooks/useSession';
+import { useSession } from '../../../hooks/useSession';
 import { CategoriesNavStyled, SidebarMenuStyled } from './styled'
 
 export function SidebarMenu({ 

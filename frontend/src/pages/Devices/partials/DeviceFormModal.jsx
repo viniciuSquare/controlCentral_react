@@ -9,13 +9,11 @@ import { StyledNewDeviceForm } from '../styled';
 export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
   // HANDLE FORM
   const [formInputs, setFormInputs] = useState({});
-  const [devCode, setDevCode] = useState("")
+  const [device, setDevice] = useState({});
+
   const [ isNetDev, setIsNetDev ] = useState();
 
   const [ isNewCategoryFormVisible, setIsNewCategoryFormVisible ] = useState();
-  const toggleNewCategoryFormVisibility = () => setIsNewCategoryFormVisible(!isNewCategoryFormVisible);
-    
-  const [device, setDevice] = useState({});
 
   useEffect(()=>{
     if(!deviceToEdit) {
@@ -25,40 +23,31 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
     }
   },[])
 
-  useEffect(() => {
-    if(formInputs["dev-category-select"] == "new")
-      setIsNewCategoryFormVisible(true)
-    else 
-      setIsNewCategoryFormVisible(false)
-    
-    formInputs["isNetDev"] == 'true' 
-      ? setIsNetDev(true)
-      : setIsNetDev(false)
-
-  }, [formInputs])
-
   const handleDevInputChange = event => {
     let fieldName = event.target.name
     let fieldValue = event.target.value
     
     setFormInputs({ ...formInputs, [fieldName] : fieldValue })
-    
+
+    // NEW CATEGORY HANDLER
+    if(formInputs["dev-category-select"] == "new") {
+      setIsNewCategoryFormVisible(true)
+      
+      formInputs["isNetDev"] == 'true' 
+        ? setIsNetDev(true)
+        : setIsNetDev(false)
+    }
+    else 
+      setIsNewCategoryFormVisible(false)
+
+    if( formInputs["dev-category-select"] && formInputs["dev-category-select"] != "new" ) {
+      const { isNetDev: isNetworkDevice } = devicesCategories
+        .filter(category => category.id == formInputs["dev-category-select"])[0];
+        
+      setIsNetDev(isNetworkDevice);
+    }
+
     console.log(formInputs)
-    // TODO - DEV CODE CREATION
-    let createDeviceCode = [
-      formInputs["dev-ip-cable"]?.length ,
-      formInputs["dev-model"],
-      formInputs["dev-category-select"]
-    ]
-    
-    let code = createDeviceCode.map( creteria => {
-      if(creteria != undefined)
-      return creteria
-      return
-    } )
-    code = code.join("-")
-    setDevCode(code)
-    // ======
   }
 
   // FORM SUBMITTION
@@ -67,25 +56,31 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
 
     const formData = new FormData(event.target)
     let data = Object.fromEntries(formData)
+    
+    console.log("RAW FORM OBJ", data);
 
+    // Include device_category creation 
     if(data["dev-category-select"] == "new") {
       data.category = {
-        title: data.title,
-        isSource: data.isSource || null
+        title: data.categoryTitle,
+        isNetDev: data.isNetDev || null
       }
     } else 
       data.category = data["dev-category-select"]
 
     delete data["dev-category-select"];
+    delete data.isNetDev;
+    delete data.categoryTitle;
+    //
+    console.log("FORMATTED", data);
     
-    console.log(data);
-
     let {data:creationResult, status} = await api.post("dispositivos/", data);
+
     if(status == 200 || status == 201) {
       closer();
     }
     
-    console.log(creationResult);
+    console.log("CREATION RESULT", creationResult);
   }  
 
   // TODO - RESET FORM FIELDS
@@ -106,7 +101,7 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
       <StyledNewDeviceForm>
         <div className="modal-head">
           <h1 className="modal-title" > Novo dispositivo</h1>
-          <h2 id="dev-code">#{devCode}</h2>
+          {/* <h2 id="dev-code">#{devCode}</h2> */}
         </div>
         <form onChange={handleDevInputChange} onSubmit={submitDevice}>
           <h3 className="field-group-name title" >
@@ -117,21 +112,30 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
               ? <input type="hidden" value={device.id}  />
               : null
           }
-          <Input value={device.alias} name="alias" label="Título" placeholder="dev-title" />
           
           <div className="input-group">
-            <Input value={device.serviceTag} name="serviceTag" label="Modelo" placeholder="dev-model" /> 
+            <Input value={device.alias} name="alias" label="Hostname" placeholder="dev-title" />
+            <Input value={device.inventoryCode} name="inventoryCode" label="Cod. Inventário" />
+          </div>
+          <div className="input-group">
+            <Input value={device.brand} name="brand" label="Marca" /> 
+            <Input value={device.model} name="model" label="Modelo" />
+          </div>
+          
+          <div className="input-group">
+            <Input value={device.serviceTag} name="serviceTag" label="Service TAG" /> 
             <Input value={device.cpu} name="cpu" label="Processador" />
           </div>
 
           <div name="dev" className="wrapper" >
             <label htmlFor="dev-category-select">Category</label>
+
             <select type="text" name="dev-category-select" >
               {/* TODO */}
               <option value="" >Selecione a categoria</option>
-              { devicesCategories.map((category) => {
+              { devicesCategories?.map((category) => {
                 return(
-                  <option value={category.id}> {category.title}</option>
+                  <option key={category.id} value={category.id}>{category.title}</option>
                 )})
               }
               <option value="new" >Criar nova categoria</option>
@@ -144,8 +148,6 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
           { isNetDev &&
             <NetDeviceForm/>
           }
-          
-          {/* <input type="text" name="dev-mac-wireless" /> */}
           <button 
             id="submit-dev" 
           >Submit new device</button>
@@ -163,12 +165,12 @@ const DeviceCategoryForm = () => {
         Criar categoria de dispositivo
       </h3>
       <div className="input-group">
-        <Input label="Nome da categoria" name="title"/>
+        <Input label="Nome da categoria" name="categoryTitle"/>
         <div className="wrapper">
           <label htmlFor="isNetDev">Disposivo conectado à rede</label>
           <select name="isNetDev" id="">
-            <option value="true">Sim</option>
             <option value="false">Não</option>
+            <option value="true">Sim</option>
           </select>
 
         </div>

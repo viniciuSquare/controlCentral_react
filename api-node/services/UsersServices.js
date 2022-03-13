@@ -2,7 +2,7 @@ const { PrismaClient } = require(".prisma/client");
 
 class CreateUserService {
   async handle(request, response) {
-    const prisma = new PrismaClient();
+    
     const {
       name,
       username,
@@ -56,7 +56,7 @@ class CreateUserService {
 
 class GetUsersService {
   async handle(request, response) {
-    const prisma = new PrismaClient();
+    
 
     const users = 
       await prisma.users.findMany({
