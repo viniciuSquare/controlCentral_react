@@ -114,7 +114,7 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
           }
           
           <div className="input-group">
-            <Input value={device.alias} name="alias" label="Hostname" placeholder="dev-title" />
+            <Input value={device.hostname} name="alias" label="Hostname" placeholder="dev-title" />
             <Input value={device.inventoryCode} name="inventoryCode" label="Cod. Inventário" />
           </div>
           <div className="input-group">
@@ -130,7 +130,7 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
           <div name="dev" className="wrapper" >
             <label htmlFor="dev-category-select">Category</label>
 
-            <select type="text" name="dev-category-select" >
+            <select type="text" name="dev-category-select" value={device.category?.id}>
               {/* TODO */}
               <option value="" >Selecione a categoria</option>
               { devicesCategories?.map((category) => {
@@ -145,8 +145,8 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
             <DeviceCategoryForm/>
           }
 
-          { isNetDev &&
-            <NetDeviceForm/>
+          { (device?.category?.isNetDev || isNetDev) &&
+            <DeviceNetworkForm device={device}/>
           }
           <button 
             id="submit-dev" 
@@ -179,24 +179,24 @@ const DeviceCategoryForm = () => {
   )
 }
 
-const NetDeviceForm = () => {
+const DeviceNetworkForm = ({device}) => {
   return(
     <>
       <h3 className="field-group-name title" >
         Dados de rede
       </h3>
       <div className="net-props input-group net-field">
-        <Input name="macCable" label="MAC ethernet" placeholder="dev-mac-cable"/>
-        <Input name="ipCable" label="IP cabo" placeholder="dev-ip-cable"/>
+        <Input name="macCable" value={device.macCable} label="MAC ethernet" placeholder="dev-mac-cable"/>
+        <Input name="ipCable" value={device.ipCable} label="IP cabo" placeholder="dev-ip-cable"/>
       </div>
       <div className="net-props input-group">
-        <Input name="macWireless" label="MAC Wi-Fi" placeholder="dev-mac-Wireless"/> 
-        <Input name="ipWireless" label="IP Wi-Fi" placeholder="dev-ip-Wireless" /> 
+        <Input name="macWireless" value={device.macWireless} label="MAC Wi-Fi" placeholder="dev-mac-Wireless"/> 
+        <Input name="ipWireless" value={device.ipWireless} label="IP Wi-Fi" placeholder="dev-ip-Wireless" /> 
       </div>          
       <div className="wrapper">
         <label htmlFor="specification">Especificação</label>
         <textarea 
-          placeholder="dev-specification" type="text" name="specification" /> 
+          placeholder="dev-specification" type="text" value={device.specification} name="specification" /> 
       </div>
     </>
   )

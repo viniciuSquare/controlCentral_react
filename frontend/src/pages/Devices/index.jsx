@@ -43,10 +43,10 @@ export function Devices() {
     
     console.log(pathData, "PATH DATA")
   
-    let {data: devicesList} = await api.get(apiPath);
+    let {data: devicesList} = await api.get(apiPath).catch(err => console.log('Devices GET err', err));
     setDevices(devicesList);
 
-    let {data: navCategories} = await api.get( apiPath + "/categorias");
+    let {data: navCategories} = await api.get( apiPath + "-categorias").catch(err => console.log('Categories GET err', err));
     setNavCategories(navCategories);
 
     return () => setNavCategories({})

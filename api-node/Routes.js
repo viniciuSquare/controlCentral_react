@@ -1,6 +1,6 @@
 const { Router } = require('express');
 
-const devicesRouter = require('./controllers/DevicesController');
+const {devicesRouter, devicesCategoryRouter} = require('./controllers/DevicesController');
 const locationsRouter = require('./controllers/LocationsController');
 const usersRouter = require('./controllers/UsersController');
 const accountsRouter = require('./controllers/AccountsController');
@@ -11,6 +11,7 @@ const routes = Router();
 // routes.post("/login", new SessionController().handle);
 
 routes.use("/dispositivos", devicesRouter);
+routes.use("/dispositivos-categorias", devicesCategoryRouter);
 routes.use("/locais", locationsRouter);
 routes.use("/contas", accountsRouter);
 routes.use("/usuarios", usersRouter);
