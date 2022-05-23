@@ -29,6 +29,13 @@ export function Devices() {
   const [ isModalVisible, setIsModalVisible ] = useState();
   const toggleModalVisibility = () => setIsModalVisible(!isModalVisible)
   
+  function showAddDeviceModal() {
+    deviceToEdit &&
+      setDeviceToEdit({})
+    
+    toggleModalVisibility()
+  }
+  
   const [ isEditionModalVisible, setEditionModalVisibility ] = useState();
   const toggleEditionModalVisibility = () => setEditionModalVisibility(!isEditionModalVisible);
 
@@ -79,7 +86,7 @@ export function Devices() {
             <div className="tools">
               <input type="text" />
               <hr className="vertical" />
-              <button onClick={toggleModalVisibility} > Add device</button>
+              <button onClick={showAddDeviceModal} > Add device</button>
             </div>
           </div>
           { isModalVisible //NEW DEVICE MODAL
@@ -129,7 +136,7 @@ const DeviceList= ({devices, handleItemSelection})=> {
                   <tr key={device.id} >
                     <td  >{device.hostname}</td>
                     <td  >{device.category?.title||"Indefinido" }</td>
-                    <td  >{device.setor}</td>
+                    <td  >{device.UserDevice[0]?.location?.title || "Indefinido"}</td>
                     <td  >{device.ipWireless || device.ipCable }</td>
                     <td  >
                       <div className="data-tools" >
@@ -188,7 +195,7 @@ const DeviceDetails = ({device}) => {
                         <h4>Usuário</h4>
                       </td>
                       <td className="align-left" >
-                        <p>Vinícius Quadrado</p>
+                        <p>{device.UserDevice[0]?.user?.name}</p>
                       </td>
                     </tr>
                     <tr>
@@ -213,7 +220,7 @@ const DeviceDetails = ({device}) => {
                         <h4>Local/Setor</h4>
                       </td>
                       <td className="align-left" >
-                        <p>Sala de TI</p>
+                        <p>{device.UserDevice[0]?.location?.title}</p>
                       </td>
                     </tr>
                   </tbody>

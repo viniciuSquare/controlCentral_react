@@ -1,8 +1,8 @@
-const { PrismaClient } = require(".prisma/client");
+const prisma = require('./PrismaClient');
 
 class CreateUserService {
   async handle(request, response) {
-    
+
     const {
       name,
       username,
@@ -57,11 +57,16 @@ class CreateUserService {
 class GetUsersService {
   async handle(request, response) {
     
-
     const users = 
       await prisma.users.findMany({
         include : {
-          department: true
+          department: true,
+          DeviceUser: {
+            include: {
+              device: true
+            }
+          },
+          
         }
       }).then(result => result)
         .catch(error =>{ 

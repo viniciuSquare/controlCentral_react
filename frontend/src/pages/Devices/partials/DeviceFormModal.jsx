@@ -51,7 +51,7 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
   }
 
   // FORM SUBMITTION
-  async function submitDevice(event) {
+  async function handleSubmitDevice(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target)
@@ -103,7 +103,7 @@ export const NewDeviceModal = ({devicesCategories, deviceToEdit, closer}) => {
           <h1 className="modal-title" > Novo dispositivo</h1>
           {/* <h2 id="dev-code">#{devCode}</h2> */}
         </div>
-        <form onChange={handleDevInputChange} onSubmit={submitDevice}>
+        <form onChange={handleDevInputChange} onSubmit={handleSubmitDevice}>
           <h3 className="field-group-name title" >
             Dados do dispositivo
           </h3>

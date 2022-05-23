@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { AccountListStyled, AccountsPageStyled, StyledaccountsPage } from "./styled";
 import { BsLink45Deg, BsNodePlus, BsPencilSquare, BsPlus, BsThreeDots, BsTrash, BsTrash2Fill } from 'react-icons/bs';
+import { BiDevices } from 'react-icons/bi';
 
 import api from '../../api/api';
 
@@ -13,7 +14,7 @@ import { DetailsContainer, StyledDataPage } from '../Base/styled';
 
 export function Accounts() {
   // DATA WILL COME FROM BACKEND
-  const [accounts , setAccounts] = useState({});
+  const [accounts , setAccounts] = useState([]);
   // const [accountsCategories , setAccountsCategories] = useState({});
   const {navCategories, setNavCategories} = useSession();
   
@@ -31,10 +32,11 @@ export function Accounts() {
   useEffect(async ()=>{
     
     console.log(pathData, "PATH DATA")
-    
-    let {data: accountsList} = await api.get("/contas");
-    setAccounts(accountsList);
-    console.log(accountsList)
+    if(accounts== undefined || !accounts?.length) {
+      let {data: accountsList} = await api.get("/contas");
+      setAccounts(accountsList);
+      console.log(accountsList)
+    }
 
     // let {data: navCategories} = await api.get("/contas/categorias");
     // setNavCategories(navCategories);
@@ -124,7 +126,12 @@ const AccountList= ({accounts, handleItemSelection})=> {
                     <td  >{account.accountType?.name}</td>
                     <td  >
                       <div className="data-tools" >
-                        <button><BsLink45Deg size="24" /></button>
+                        <Link to={`/devices/account=${account.id}`} ><BiDevices size="24"/>{account.DeviceAccounts?.length || 0}</Link>
+                        {
+                          account.accountType.serviceControllerURL 
+                            ? <Link to={{pathname: `${account.accountType.serviceControllerURL}`}} target="_blank" ><BsLink45Deg size="24" /></Link>
+                            : <BsLink45Deg size="24" />
+                        }
                         <button onClick={ ()=> {
                             <Modal>
 

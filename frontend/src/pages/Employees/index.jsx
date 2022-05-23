@@ -7,6 +7,8 @@ import Modal from "../../components/Modal";
 import api from '../../api/api.js'
 import { FormStyled } from "../../components/FormContent/styled";
 import { StyledDataPage } from "../Base/styled";
+import { Link } from "react-router-dom";
+import { BiDevices } from "react-icons/bi";
 
 export function Employees() {
   const [ isModalVisible, setIsModalVisible ] = useState();
@@ -181,6 +183,7 @@ const EmployeesList = ({data}) => {
                   <td>{employee.name}</td>
                   <td>{employee.department.title}</td>
                   <td>
+                    <Link><BiDevices size="24"/>{employee.DeviceUser?.length || 0}</Link>
                     <button>
                       <img src={userDataIcon} alt="" />
                     </button>

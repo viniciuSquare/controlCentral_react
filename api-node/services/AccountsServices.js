@@ -5,14 +5,18 @@ class AccountServices {
   async getAccounts(request, response) {
     const accounts = await prisma.accounts.findMany({
       include : {
+        accountType: true,
+        DeviceAccounts: {
+          include: {
+            device: true,
+          }
+        },
         accountType: true
       }
     })
       .catch(error => console.log(error));
 
     response.json(accounts)
-
-
   }
 
   async createAccount(request, response) {
@@ -48,6 +52,11 @@ class AccountServices {
       })
       response.json(account);
     }
+  }
+
+  async getServices(request, response) {
+    const services = await prisma.service.findMany()
+
   }
 }
 

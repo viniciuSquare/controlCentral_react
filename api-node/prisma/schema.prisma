@@ -14,12 +14,13 @@ model Devices {
   id            Int               @id @default(autoincrement())
   hostname      String
   category      DeviceCategories? @relation(fields: [deviceCategoryId], references: [id])
+  inventoryID   String?
+  purchaseDate  DateTime?
   serviceTag    String?
-  inventoryCode String?
   cpu           String?
   specification String?
   model         String?
-  brand         String?
+  manufacturer  String?
 
   // NET PROPS
   ipCable     String?
@@ -36,9 +37,11 @@ model Devices {
 }
 
 model DeviceCategories {
-  id       Int      @id @default(autoincrement())
-  title    String
-  isNetDev Boolean? @db.TinyInt
+  id                 Int      @id @default(autoincrement())
+  title              String
+  isNetDev           Boolean? @db.TinyInt
+  inventoryIDPrefix  String?
+  currentDevIdNumber Int?     @default(1)
 
   Devices Devices[]
 }
@@ -65,8 +68,8 @@ model Users {
   department Locations? @relation(fields: [departmentId], references: [id], name: "user_department")
   location   Locations? @relation(fields: [locationsId], references: [id])
 
-  locationsId  Int
-  departmentId Int
+  locationsId  Int?
+  departmentId Int?
   DeviceUser   DeviceUser[]
   Tasks        Tasks[]
 }
@@ -76,12 +79,10 @@ model DeviceUser {
   user     Users?     @relation(fields: [userId], references: [id])
   device   Devices?   @relation(fields: [devicesId], references: [id])
   location Locations? @relation(fields: [locationId], references: [id])
-  account  Accounts?  @relation(fields: [accountsId], references: [id])
 
   locationId Int
   devicesId  Int
   userId     Int
-  accountsId Int?
 }
 
 model DeviceAccounts {
@@ -95,21 +96,28 @@ model DeviceAccounts {
 }
 
 model Accounts {
-  id          Int          @id @default(autoincrement())
-  address     String
-  accountType Service_type @relation(fields: [service_typeId], references: [id])
+  id              Int          @id @default(autoincrement())
+  address         String
+  accountType     Service?     @relation(fields: [serviceId], references: [id])
+  licencePurchase DateTime?
+  type            ServiceType?
 
-  service_typeId Int
-  DeviceUser     DeviceUser[]
+  serviceId      Int?
   DeviceAccounts DeviceAccounts[]
 }
 
-model Service_type {
-  id          Int     @id @default(autoincrement())
-  name        String
-  description String?
+model Service {
+  id                   Int     @id @default(autoincrement())
+  name                 String
+  description          String?
+  serviceControllerURL String?
 
   Accounts Accounts[]
+}
+
+enum ServiceType {
+  DEFAULT
+  LICENCED
 }
 
 // NOT IN PRODUCTION USAGE

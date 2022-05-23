@@ -47,10 +47,21 @@ function getDeviceFromRequestBody( requestBody ) {
 
 class DeviceService {
   async getDevices(request, response) {
-
+    // TODO - Handle WITH ACCOUNTS query
     const allDevices = await prisma.devices.findMany({
       include: {
-        category: true
+        category: true,
+        DeviceAccounts: {
+          include: {
+            account: true
+          }
+        },
+        UserDevice: {
+          include: {
+            user: true,
+            location: true
+          }
+        }
       }
     });
 
