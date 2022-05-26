@@ -16,7 +16,7 @@ export function Accounts() {
   // DATA WILL COME FROM BACKEND
   const [accounts , setAccounts] = useState([]);
   // const [accountsCategories , setAccountsCategories] = useState({});
-  const {navCategories, setNavCategories} = useSession();
+  const {domainCategories, setDomainCategories} = useSession();
   
   // SET IF DATA CAME
   const [ isContentLoaded, setIsContentLoaded ] = useState();
@@ -38,10 +38,10 @@ export function Accounts() {
       console.log(accountsList)
     }
 
-    // let {data: navCategories} = await api.get("/contas/categorias");
-    // setNavCategories(navCategories);
+    // let {data: domainCategories} = await api.get("/contas/categorias");
+    // setDomainCategories(domainCategories);
 
-    return () => setNavCategories({})
+    return () => setDomainCategories({})
   }, [])
 
   useEffect(()=>{
@@ -83,7 +83,7 @@ export function Accounts() {
             </div>
           </div>
           { isModalVisible //NEW account MODAL
-              && <NewAccountModal accountsCategories={navCategories}closer={toggleVisibility}/> 
+              && <NewAccountModal accountsCategories={domainCategories}closer={toggleVisibility}/> 
           }
           
         </div>

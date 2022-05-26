@@ -6,11 +6,26 @@ export function SessionContextProvider(props) {
   // TODO - GET LAST SESSION DATA
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [navCategories, setNavCategories] = useState({});
+  const [domainCategories, setDomainCategories] = useState({});
+  const [selectedItem, setSelectedItem] = useState({});
+
+  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
+  const toggleEditFormVisibility = () => setIsEditFormVisible(!isEditFormVisible);
+
+
+  const handleItemSelection = (selectedItem, intent) => {
+    // TODO - OPEN MODAL DEPENDING ON INTENT
+    selectedItem.intent = intent;
+    setSelectedItem(selectedItem);
+  }
 
   return(
     <SessionContext.Provider
-      value={{isSidebarOpen, setIsSidebarOpen, navCategories, setNavCategories}}
+      value={{
+        isSidebarOpen, setIsSidebarOpen, 
+        domainCategories, setDomainCategories,
+        selectedItem, handleItemSelection
+      }}
     >
       {props.children}
     </SessionContext.Provider>

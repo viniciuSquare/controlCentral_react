@@ -19,14 +19,14 @@ export function LocationsPage( ) {
 
   function submitNewOperationalCategory(){}
 
-  const { navCategories, setNavCategories } = useSession();
+  const { domainCategories, setDomainCategories } = useSession();
 
   useEffect(async()=>{
     let {data: locationsList} = await api.get('locais');
     setLocations(locationsList);
     console.log(locationsList)
     
-    return ()=> setNavCategories({})
+    return ()=> setDomainCategories({})
   },[])
   
   // FILTER LOCATIONS CATEGORY
@@ -36,7 +36,7 @@ export function LocationsPage( ) {
       if(category.operationalCategory != null)
         categories.push(category.operationalCategory)
     })
-    setNavCategories(categories)
+    setDomainCategories(categories)
 
   },[locations])
   return(

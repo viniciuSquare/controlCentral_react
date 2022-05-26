@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledDataPage = styled.div`
   display: grid;
-  grid-template-columns: 10% auto 10%;
+  grid-template-columns: 10% auto ;
   
   width: 100%;
   
@@ -81,13 +81,33 @@ export const StyledDataPage = styled.div`
       margin-bottom: 1.5rem;
 
       table {
-        background-color: #E0EAFC;
-        height: 100%;
+        /* background-color: #E0EAFC; */
 
-        border-radius: 12px;
+        background: #FFFFFF;
+        box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.1);
+        border-radius: 18px;
+
+        height: 100%;
 
         display: flex;
         flex-direction: column;
+
+        th, td:not(:last-child) {
+          padding-left:1rem;
+          padding-right:0.3rem;
+        }
+
+        td, th {
+          text-align: left ;
+          
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          svg {
+            color: inherit;
+          }
+
+        }
       }
       
       /* GRID SPECIFICATION FOR PAGES TABLE */
@@ -100,7 +120,7 @@ export const StyledDataPage = styled.div`
       
       #devices-listage {    
         tr, thead {
-          grid-template-columns: 2fr 2fr 2fr 1.5fr 1.5fr;
+          grid-template-columns: 1.5fr 2fr 2fr 1.8fr 1.5fr 1.6fr 1.5fr;
         }
       }
 
@@ -143,7 +163,7 @@ export const StyledDataPage = styled.div`
     padding: 8px 0;
     .tools {
       display: flex;
-      gap: 2rem;
+      gap: 1.3rem;
     }
   }
   .data-tools {

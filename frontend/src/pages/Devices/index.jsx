@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 
-import { BsLink45Deg, BsPencilSquare, BsThreeDots, BsTrash2Fill } from 'react-icons/bs';
-
 import api from '../../api/api';
 
-import { NewDeviceModal } from './partials/DeviceFormModal';
+import { NewDeviceModal } from './components/DeviceFormModal';
 import { useSession } from '../../hooks/useSession';
 
-import { DetailsContainer, StyledDataPage } from '../Base/styled';
+import { StyledDataPage } from '../Base/styled';
 
 import Modal from '../../components/Modal';
+import { DeviceList } from './components/DeviceList';
+import { DeviceDetails } from './components/DeviceDetails';
 
 const apiPath = "/dispositivos"
 
@@ -18,7 +18,7 @@ export function Devices() {
   // DATA WILL COME FROM BACKEND
   const [devices , setDevices] = useState({});
   // const [devicesCategories , setDevicesCategories] = useState({});
-  const {navCategories, setNavCategories} = useSession();
+  const {domainCategories, setDomainCategories} = useSession();
   
   // SET IF DATA CAME
   const [ isContentLoaded, setIsContentLoaded ] = useState();
@@ -46,17 +46,17 @@ export function Devices() {
 
 
   // FEED DATA FOR TABLES FROM BACKEND
-  useEffect(async ()=>{
-    
+  useEffect(async()=>{
+      
     console.log(pathData, "PATH DATA")
   
     let {data: devicesList} = await api.get(apiPath).catch(err => console.log('Devices GET err', err));
     setDevices(devicesList);
 
-    let {data: navCategories} = await api.get( apiPath + "-categorias").catch(err => console.log('Categories GET err', err));
-    setNavCategories(navCategories);
-
-    return () => setNavCategories({})
+    let {data: domainCategories} = await api.get( apiPath + "-categorias").catch(err => console.log('Categories GET err', err));
+    setDomainCategories(domainCategories);
+    
+    return () => setDomainCategories({})
   }, [])
 
   useEffect(()=>{
@@ -90,171 +90,19 @@ export function Devices() {
             </div>
           </div>
           { isModalVisible //NEW DEVICE MODAL
-              && <NewDeviceModal deviceToEdit={deviceToEdit} devicesCategories={navCategories} closer={toggleModalVisibility}/> 
+              && <NewDeviceModal deviceToEdit={deviceToEdit} devicesCategories={domainCategories} closer={toggleModalVisibility}/> 
           }
           
         </div>
         <div className="pane-content">
           <DeviceList devices={devices} handleItemSelection={setSelectedDevice}/>
         </div>
+        {/* TODO - HANDLE DETAILS VIEW  */}
         <DeviceDetails device={selectedDevice} />
       </div>
-      <div className="right-side">
+      {/* <div className="right-side">
 
-      </div>
+      </div> */}
     </StyledDataPage>
   )
-}
-
-const DeviceList= ({devices, handleItemSelection})=> {
-
-  const [isEditFormVisible, setIsEditFormVisible] = useState(false);
-  const toggleEditFormVisibility = () => setIsEditFormVisible(!isEditFormVisible);
-
-  const handleSelectionIntent = (selectedItem, intent) => {
-    selectedItem.intent = intent;
-    handleItemSelection(selectedItem);
-  }
-
-  return(
-    <table id="devices-listage"  className="with-td-division">
-      <thead>
-        <th>Alias</th>
-        <th>Usuário</th>
-        <th>Setor</th>
-        <th>IP</th>
-        <th>Ferramentas</th>
-      </thead>
-      <tbody>
-        {
-          devices.length > 0 &&
-            (
-              devices.map( device => {
-                console.log(device.ipWireless)
-                console.log(device.ipCable)
-                return (
-                  <tr key={device.id} >
-                    <td  >{device.hostname}</td>
-                    <td  >{device.category?.title||"Indefinido" }</td>
-                    <td  >{device.UserDevice[0]?.location?.title || "Indefinido"}</td>
-                    <td  >{device.ipWireless || device.ipCable }</td>
-                    <td  >
-                      <div className="data-tools" >
-                        <button><BsLink45Deg size="24" /></button>
-                        <button onClick={()=> handleSelectionIntent(device,"edit") }><BsPencilSquare size="24" /></button>
-                        <button onClick={()=> handleItemSelection(device)} ><BsThreeDots size="24" /></button>
-                      </div>
-                    </td>
-                  </tr>
-                )
-              } 
-            )
-          )
-        }
-        
-      </tbody>
-    </table>
-  )
-}
-
-const DeviceDetails = ({device}) => {
-  console.log(device)
-
-  const deleteDevice = async () => {
-    await api.put(`${apiPath}/${device.id}`);
-  }
-
-  return(
-    <>
-      <h1 className="field-title">Detalhes da selação</h1>
-      <DetailsContainer >
-        { device.id
-          ? (
-            <>
-              <div id="data-details">
-                <div className="head">
-                  <div className="title">
-                    <p>Nome</p>
-                    <h3>{device.alias}</h3>
-                  </div>
-                  
-                  <div className="tools">
-                    <button>
-                      <BsPencilSquare size="32" />
-                    </button>
-                    <button onClick={deleteDevice} >
-                      <BsTrash2Fill size="32" />
-                    </button>
-                  </div>
-
-                </div>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td className="align-left" >
-                        <h4>Usuário</h4>
-                      </td>
-                      <td className="align-left" >
-                        <p>{device.UserDevice[0]?.user?.name}</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="align-left" >
-                        <h4>Endereço IP</h4>
-                      </td>
-                      <td className="align-left" >
-                        <p>{device.ipCable||device.ipWireless||"Não definido"}</p>
-                        
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="align-left" >
-                        <h4>Tipo dispositivo</h4>
-                      </td>
-                      <td className="align-left" >
-                        <p>{device.category?.title||"Não definido"}</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="align-left" >
-                        <h4>Local/Setor</h4>
-                      </td>
-                      <td className="align-left" >
-                        <p>{device.UserDevice[0]?.location?.title}</p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                {/* <tbody>
-                  <tr>
-                      <td className="align-left" >
-                        Estado
-                      </td>
-                      <td className="align-left" >
-                        <p>{device.state||"Não definido"}</p>
-                      </td>
-                    </tr>
-                    
-                    <tr>
-                      <td className="align-left" >
-                        <h2>Categoria Operacional</h2>
-                      </td>
-                      <td className="align-left" >
-                        <p>{device.operationalCategory?.title||"Não definido"}</p>
-                      </td>
-                    </tr>
-                  </tbody> */}
-                
-              </div>
-            </>
-          )
-          : (
-            <h1 className="field-title warning">Selecione item para ver detalhes</h1>
-          )
-      }
-        
-      </DetailsContainer>
-    </>
-  )
-
 }

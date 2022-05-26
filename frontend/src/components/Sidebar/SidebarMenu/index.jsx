@@ -12,8 +12,8 @@ export function SidebarMenu({
 
   const [isActive, setIsActive] = useState(path.replace(/\//g, "")==pathname.replace(/\//g, ""));
   
-  const { navCategories } = useSession();
-  // console.log(path, isActive, navCategories, pathname)
+  const { domainCategories } = useSession();
+  // console.log(path, isActive, domainCategories, pathname)
 
   return(
     <>
@@ -25,7 +25,7 @@ export function SidebarMenu({
       </SidebarMenuStyled>
       { 
         isActive &&
-          <CategoriesNav categories={navCategories}/>   
+          <CategoriesNav categories={domainCategories}/>   
       }
     </>
 

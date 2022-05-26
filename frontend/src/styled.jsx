@@ -14,6 +14,10 @@ export const AppStyled = styled.div`
 
   --title: #203C6B;
 
+  /* * {
+    outline: 1px solid red;
+  } */
+
   &.sidebar-open {
     grid-template-columns: minmax(10rem, 220px) auto;
   }
@@ -69,6 +73,7 @@ export const AppStyled = styled.div`
       width: 100%;
 
       color: rgba(19, 19, 84, 0.6);
+      padding-top:0.5rem ;
 
       tr {
         .align-left {
@@ -89,9 +94,6 @@ export const AppStyled = styled.div`
         align-items: center;
       
         border-radius: 8px;
-        &.with-td-division{
-          
-        }
     
         td, th {
           height: 2.2rem;
@@ -99,8 +101,8 @@ export const AppStyled = styled.div`
           text-align: center;
 
           width: 100%;
-          & + td, & + th{
-            border-left: 1px solid rgba(19, 19, 84, 0.301);
+          & + td{
+            border-left: 1px solid rgba(19, 19, 84, 0.106);
           }
         }
 

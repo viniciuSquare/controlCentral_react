@@ -24,14 +24,15 @@ export const SidebarStyled = styled.aside`
     width: 80%;
 
     border-bottom: 1px solid #dfdfdf85;
-    background-color: #332fff;
+    /* background-color: #332fff; */
     border-radius: 12px;
 
     color: #fff;
 
     h1.brand-title {
-      font-family: "tayayaFont";
+      font-family: "Nunito";
       letter-spacing: 0.2rem;
+      color: #0e4194;
 
       align-self: center;
     }
@@ -39,6 +40,7 @@ export const SidebarStyled = styled.aside`
     .logo {
       object-fit: contain;
       height: 38px;
+      filter: drop-shadow(0px 4px 56px rgba(0, 0, 0, 0.25));
     }
 
     /* &::after {
