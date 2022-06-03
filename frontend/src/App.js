@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Router, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import { Home } from './pages/Home'
 import { Tasks } from './pages/Tasks';
@@ -16,7 +16,7 @@ import { AppStyled } from './styled'
 import { DataContextProvider } from './contexts/DataContext';
 
 import { useSession } from './hooks/useSession';
-import { SessionContextProvider } from './contexts/SessionContext';
+
 import { Accounts } from './pages/Accounts';
 
 export default function App() {

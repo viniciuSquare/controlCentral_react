@@ -17,6 +17,9 @@ export const AppStyled = styled.div`
   /* * {
     outline: 1px solid red;
   } */
+  .left-side{
+    display: none ;
+  }
 
   &.sidebar-open {
     grid-template-columns: minmax(10rem, 220px) auto;

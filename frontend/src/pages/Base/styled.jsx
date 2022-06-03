@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledDataPage = styled.div`
   display: grid;
-  grid-template-columns: 10% auto ;
+  /* grid-template-columns: 10% auto ; */
   
   width: 100%;
   
@@ -79,14 +79,26 @@ export const StyledDataPage = styled.div`
 
     .pane-content {
       margin-bottom: 1.5rem;
+      display: flex;
+
+      background: #FFFFFF;
+      box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.1);
+
+      border-radius: 18px;
+
+      .pane-side-nav {
+        padding: 1rem 0.8rem ;
+        width: 15rem ;
+        ul {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+
+        }
+      }
 
       table {
         /* background-color: #E0EAFC; */
-
-        background: #FFFFFF;
-        box-shadow: 0px 0px 13px rgba(0, 0, 0, 0.1);
-        border-radius: 18px;
-
         height: 100%;
 
         display: flex;

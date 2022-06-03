@@ -1,4 +1,4 @@
-import { BsFillPersonLinesFill, BsLink45Deg, BsPencilSquare, BsThreeDots } from "react-icons/bs";
+import { BsFillPersonLinesFill, BsPencilSquare, BsThreeDots } from "react-icons/bs";
 import { useSession } from "../../../hooks/useSession";
 
 export function DeviceListItem({ device, isHeader }) {

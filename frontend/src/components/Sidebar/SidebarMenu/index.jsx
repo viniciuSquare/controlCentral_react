@@ -23,10 +23,10 @@ export function SidebarMenu({
           <h3 className="menu-title" >{title}</h3>
         </NavLink>
       </SidebarMenuStyled>
-      { 
+      {/* { 
         isActive &&
           <CategoriesNav categories={domainCategories}/>   
-      }
+      } */}
     </>
 
   )

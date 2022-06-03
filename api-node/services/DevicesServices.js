@@ -45,10 +45,69 @@ function getDeviceFromRequestBody( requestBody ) {
   return  device;
 }
 
+function deviceDAO ( completeDevice ) {
+  const {
+    id, 
+    hostname, 
+    inventoryID, 
+    purchaseDate, 
+    serviceTag, 
+    cpu, 
+    specification,
+    model, 
+    ipCable,
+    ipWireless,
+    macCable,
+    macWireless,
+    isSource,
+    state,
+    category
+  } = completeDevice;
+
+  const device = {
+    id, 
+    hostname, 
+    inventoryID, 
+    purchaseDate, 
+    serviceTag, 
+    cpu, 
+    specification,
+    model, 
+    ipCable,
+    ipWireless,
+    macCable,
+    macWireless,
+    isSource,
+    state,
+    category,
+    deviceAccounts: completeDevice.DeviceAccounts.length>0 
+      ? [ ...completeDevice.DeviceAccounts.map( devAccount => {
+          return { 
+            address: devAccount.account.address, 
+            licenceType: devAccount.account.type,
+            licencePurcheseDate: devAccount.account.licencePurchese,
+            usage: devAccount.intent
+          } }) 
+      ] : [],
+    deviceUsers: completeDevice.UserDevice.length>0 
+    ? [ ...completeDevice.DeviceAccounts.map( devAccount => {
+      return { 
+        address: devAccount.account.address, 
+        licenceType: devAccount.account.type,
+        licencePurcheseDate: devAccount.account.licencePurchese,
+        usage: devAccount.intent
+      } }) 
+    ] : [],
+
+  };
+
+  return device;
+}
+
 class DeviceService {
   async getDevices(request, response) {
     // TODO - Handle WITH ACCOUNTS query
-    const allDevices = await prisma.devices.findMany({
+    const completeDevicesList = await prisma.devices.findMany({
       include: {
         category: true,
         DeviceAccounts: {
@@ -64,8 +123,13 @@ class DeviceService {
         }
       }
     });
+    const devices = completeDevicesList.map( completeDevice => {
+      const device = deviceDAO(completeDevice);
 
-    response.json(allDevices);
+      return device
+    })
+
+    response.json(devices);
   }
 
   async createDevice(request, response) {
@@ -86,7 +150,7 @@ class DeviceService {
         }
       });
             
-      response.status(201).json(newDevice);
+      response.status(201).json(deviceDAO(newDevice));
 
     } else {
 

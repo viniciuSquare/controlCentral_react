@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import api from '../../api/api';
 
@@ -95,6 +95,19 @@ export function Devices() {
           
         </div>
         <div className="pane-content">
+          <div className="pane-side-nav">
+            <h2>Categorias</h2>
+            <ul>
+              { domainCategories?.length > 0 &&
+                  domainCategories?.map( (category, idx) => {
+                    return(
+                      <NavLink key={idx} to={` ${apiPath}/${category.title} `} >{category.title}</NavLink>
+                    )
+                  })
+              }
+            </ul>
+
+          </div>
           <DeviceList devices={devices} handleItemSelection={setSelectedDevice}/>
         </div>
         {/* TODO - HANDLE DETAILS VIEW  */}

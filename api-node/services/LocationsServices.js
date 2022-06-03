@@ -2,11 +2,7 @@ const prisma = require('./PrismaClient');
 
 class LocationsServices {
   async getLocations (request, response) {
-    const locations = await prisma.locations.findMany({
-      include: {
-        operationalCategory: true
-      }
-    });
+    const locations = await prisma.locations.findMany();
 
     response.json(locations)
   }
